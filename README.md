@@ -19,7 +19,7 @@ Database :
 - MySQL
 
 Clone this repository. 
-Add the database file present in the db folder to your MySql provider.
+Add the database file present in the db folder to your MySql provider for sample data.
 
 
 Installation:
