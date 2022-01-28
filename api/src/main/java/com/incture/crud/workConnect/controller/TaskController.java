@@ -41,8 +41,13 @@ public class TaskController {
         return service.getTaskById(id);
     }
     @GetMapping("/TaskByEmail/{email}")
-    public List<Task> findTaskById(@PathVariable String email) {
+    public List<Task> findTaskByEmail(@PathVariable String email) {
         return service.getTaskByEmail(email);
+    }
+    
+    @GetMapping("/TaskByEmailPlatform/{email}/{platform}")
+    public List<Task> findTaskByEmailPlatform(@PathVariable String email, @PathVariable String platform) {
+        return service.getTaskByEmailPlatform(email,platform);
     }
     
     @PutMapping("/update")

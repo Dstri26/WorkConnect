@@ -28,6 +28,9 @@ public class TaskService {
     public List<Task> getTaskByEmail(String email) {
         return repository.findByEmail(email);
     }
+    public List<Task> getTaskByEmailPlatform(String email, String platform) {
+        return repository.findByEmailPlatform(email,platform);
+    }
     
     public String deleteTask(int id) {
         repository.deleteById(id);
