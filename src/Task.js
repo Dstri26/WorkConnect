@@ -1,4 +1,20 @@
+import { useNavigate } from "react-router-dom";
+
+
+    
 const Task = ({task}) => {
+    const navigate = useNavigate();
+
+    
+    const handleDelete= (id,platform) => {
+        fetch('http://localhost:9191/delete/'+id,{
+            method : 'DELETE',
+        }).then(()=>{
+            console.log('Blog deleted');
+            navigate('/');
+            
+        })
+    }
     return ( 
         <div className="task">
             <div className={"alert text-left " + ( task.status === 0 ? 'alert-warning ' : 'alert-secondary text-muted')} role="alert">
@@ -13,7 +29,8 @@ const Task = ({task}) => {
                         <div className="col-md-1 text-center d-flex align-items-center justify-content-center symbols">
                             <div className="row">
                                 <div className="col-12">
-                                    <i className={"fas " + ( task.status === 0 ? 'fa-check ' : 'fa-times text-muted')}></i>
+                                    <i onClick={() => handleDelete(task.id)} className={"fas " + ( task.status === 0 ? 'fa-check ' : 'fa-times text-muted')}></i>
+
                                 </div>
                             </div>
                         </div>

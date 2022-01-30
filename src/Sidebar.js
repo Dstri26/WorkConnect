@@ -1,7 +1,29 @@
+//import { useState } from "react";
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
+
+    // const [isLogout,setIsLogout] =  useState(true);
+    const navigate = useNavigate();
+    const handleLogout= (e) => {
+        
+        let email= sessionStorage.getItem("wcEmail");
+        const payload = {email};
+        fetch('http://localhost:9191/logoutUser/',{
+            method : 'POST',
+            headers : {"Content-Type":"application/json"},
+            body: JSON.stringify(payload)
+        }).then((res)=>{    
+            return res.json();
+        }).then((data)=>{
+            if(data.status === '1'){
+                sessionStorage.clear();
+                navigate('/login');
+            }
+            
+        })
+    }
     return ( 
         <div className="sidebar">
             <header className="header" id="header">
@@ -20,7 +42,7 @@ const SideBar = () => {
                             {/* <Link to="/"className="nav_link"> <i className="fas fa-chart-line"></i> <span className="nav_name">Stats</span> </Link>  */}
                         </div>
                     </div> 
-                    <Link to="/"className="nav_link"><i className="fas fa-sign-out-alt"></i> <span className="nav_name">SignOut</span> </Link>
+                   {sessionStorage.getItem("wcEmail") && <Link to="/" onClick={handleLogout} className="nav_link"><i className="fas fa-sign-out-alt"></i> <span className="nav_name">SignOut</span> </Link> }
                 </nav>
             </div>
         </div>
