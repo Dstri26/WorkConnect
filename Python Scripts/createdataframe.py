@@ -1,4 +1,5 @@
 #required imports
+from operator import le
 import requests
 import json
 import pandas as pd
@@ -8,31 +9,40 @@ import pandas as pd
 from sqlalchemy import create_engine
 import pymysql
 
+
 #Credentials for slack
-token = 'xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q'
-headers = {'Authorization': 'Bearer ' + token, 'Content-type': 'application/x-www-form-urlencoded'}
+bot_token = 'xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q'
+user_tokne = "xoxp-2934006031602-2957745528160-3034281573060-351cf2a397d9c66ea2c65d9b08d11fa9"
+headers = {'Authorization': 'Bearer ' +bot_token, 'Content-type': 'application/x-www-form-urlencoded'}
 channel = 'C0313AG3ZPB'
 payload = {'channel':channel}
 conv_history_url = "https://slack.com/api/conversations.history"
 
-#collecting json from API
+
+
+#collecting conv_history_json from API
 r = requests.get(url=conv_history_url,params=payload,headers=headers)
 conv_history_json_object = r.json()
-with open('conv_history.json', 'w') as f:
-    json.dump(conv_history_json_object, f)
+#with open('conv_history.json', 'w') as f:
+  #json.dump(conv_history_json_object, f)
+
+#collecting user_info json from API
 
 #Creating a Dataframe of User-Texts,Time-Stamp and Username
-conv_history_df = pd.read_json('conv_history.json')
+#conv_history_df = pd.read_json('conv_history.json')
 texts_slack = []
 time_stamp_slack = []
 user_slack = []
 names_slack = []
 #print(len(df['messages'].keys()))
 #print(df['messages'][13]['text'])
-for i in range(len(conv_history_df['messages'].keys())):
-  texts_slack.append(conv_history_df['messages'][i]['text'])
-  time_stamp_slack.append(conv_history_df['messages'][i]['ts'])
-  user_slack.append(conv_history_df['messages'][i]['user'])
+
+for i in range(len(conv_history_json_object['messages'])):
+  texts_slack.append(conv_history_json_object['messages'][i]['text'])
+  time_stamp_slack.append(conv_history_json_object['messages'][i]['ts'])
+  user_slack.append(conv_history_json_object['messages'][i]['user'])
+
+
 
 for i in user_slack:
   if i =='U02U5MXFJ4Q':
@@ -47,8 +57,10 @@ for i in user_slack:
     names_slack.append("Trideep")
 
 
-data = {"Texts-From-Channel":texts_slack,"Time-Stamp":time_stamp_slack,"User-Name":names_slack}
-data_frame = pd.DataFrame(data)
+
+#data = {"Texts-From-Channel":texts_slack,"Time-Stamp":time_stamp_slack,"User-Name":names_slack}
+#data_frame = pd.DataFrame(data)
 #print(data_frame)
-data_frame.to_csv("dataset.csv",index=False)
-print("Data created successfully")
+#data_frame.to_csv("dataset.csv",index=False)
+#print("Data created successfully")
+#print(len(user_slack),user_slack)'''
