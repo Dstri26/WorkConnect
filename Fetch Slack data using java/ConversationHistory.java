@@ -9,11 +9,10 @@ import java.util.ArrayList;
 
 import org.json.*;
 
-class GetMessage
+class jsonResponse
 {
-	public ArrayList<String> GetMessage() throws IOException, InterruptedException
+	public HttpResponse<String> jsonResponse() throws IOException, InterruptedException
 	{
-		ArrayList<String> text_list = new ArrayList<String>();
 		String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
 		String token = "Bearer "+bot_token;
 		String channel_id = "C0313AG3ZPB";
@@ -31,9 +30,20 @@ class GetMessage
 		
 		response = client.send(request,HttpResponse.BodyHandlers.ofString());
 		//System.out.println(response.body());
+		return response;
 		
-		
-		String jsonString = response.body();
+	}
+
+}
+
+class GetMessage extends jsonResponse
+{
+	public ArrayList<String> GetMessage() throws IOException, InterruptedException
+	{
+		ArrayList<String> text_list = new ArrayList<String>();
+		jsonResponse json = new jsonResponse();
+	
+		String jsonString = json.jsonResponse().body();
 		JSONObject obj = new JSONObject(jsonString);
 		
 		JSONArray arr = obj.getJSONArray("messages"); 
@@ -50,31 +60,15 @@ class GetMessage
 	
 }
 
-class GetTimeStamp
+class GetTimeStamp extends jsonResponse
 {
 	public ArrayList<String> GetTimeStamp() throws IOException, InterruptedException
 	{
 		ArrayList<String> time_list = new ArrayList<String>();
-		String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
-		String token = "Bearer "+bot_token;
-		String channel_id = "C0313AG3ZPB";
-		HttpClient client = HttpClient.newBuilder().build();
-		HttpRequest request = HttpRequest.newBuilder()
-		                .uri(URI.create("https://slack.com/api/conversations.history" + "?channel=" + channel_id + "&pretty=1"))
-		                .header("Authorization",token)
-		                .header("Content-Type","application/x-www-form-urlencoded")
-		                .POST(HttpRequest.BodyPublishers.noBody())
-		                .build();
-		
-		
 
-		HttpResponse<String> response;
+		jsonResponse json = new jsonResponse();
 		
-		response = client.send(request,HttpResponse.BodyHandlers.ofString());
-		//System.out.println(response.body());
-		
-		
-		String jsonString = response.body();
+		String jsonString = json.jsonResponse().body();
 		JSONObject obj = new JSONObject(jsonString);
 		
 		JSONArray arr = obj.getJSONArray("messages"); 
@@ -92,31 +86,15 @@ class GetTimeStamp
 
 }
 
-class UserId
+class UserId extends jsonResponse
 {
 	public ArrayList<String> UserId() throws IOException, InterruptedException
 	{
 		ArrayList<String> user_list = new ArrayList<String>();
-		String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
-		String token = "Bearer "+bot_token;
-		String channel_id = "C0313AG3ZPB";
-		HttpClient client = HttpClient.newBuilder().build();
-		HttpRequest request = HttpRequest.newBuilder()
-		                .uri(URI.create("https://slack.com/api/conversations.history" + "?channel=" + channel_id + "&pretty=1"))
-		                .header("Authorization",token)
-		                .header("Content-Type","application/x-www-form-urlencoded")
-		                .POST(HttpRequest.BodyPublishers.noBody())
-		                .build();
-		
-		
 
-		HttpResponse<String> response;
+		jsonResponse json = new jsonResponse();
 		
-		response = client.send(request,HttpResponse.BodyHandlers.ofString());
-		//System.out.println(response.body());
-		
-		
-		String jsonString = response.body();
+		String jsonString = json.jsonResponse().body();
 		JSONObject obj = new JSONObject(jsonString);
 		
 		JSONArray arr = obj.getJSONArray("messages");
@@ -226,10 +204,10 @@ public class ConversationHistory extends name {
 		}
 		emails.add(index_of_bot, null);
 		
-		System.out.println("Time Stamp"+time.GetTimeStamp());	
-		System.out.println("Texts from channel"+text.GetMessage());	
-		System.out.println("User-id"+user.UserId());	
-		System.out.println("Emails"+emails);	
+		System.out.println("Time Stamp  "+time.GetTimeStamp());	
+		System.out.println("Texts from channel  "+text.GetMessage());	
+		System.out.println("User-id  "+user.UserId());	
+		System.out.println("Emails  "+emails);	
 		
 	}
 
