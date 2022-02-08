@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +25,7 @@ public class Task {
 	private String platform;
 	private String email;
 	private int status;
-	private String time;
+	private Date time;
 	
 
     public int getId() {
@@ -61,7 +63,10 @@ public class Task {
     public void setStatus(int s) {
         this.status = s;
     }
-    public String getTime() {
+    public Date getTime() {
         return time;
+    }
+    public void setTime(Date d) {
+    	this.time = d;
     }
 }

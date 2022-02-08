@@ -8,6 +8,6 @@ public class WorkConnectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WorkConnectApplication.class, args);
-	}
+	}	
 
 }

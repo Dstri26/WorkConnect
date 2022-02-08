@@ -1,5 +1,6 @@
 package com.incture.crud.workConnect.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.incture.crud.workConnect.entity.Task;
@@ -35,7 +36,11 @@ public class TaskController {
     public List<Task> findAllTasks() {
         return service.getTasks();
     }
-
+    
+    @GetMapping("/fetch")
+    public String fetchData() throws IOException, InterruptedException {
+        return service.fetchData();
+    }
     @GetMapping("/TaskById/{id}")
     public Task findTaskById(@PathVariable int id) {
         return service.getTaskById(id);
