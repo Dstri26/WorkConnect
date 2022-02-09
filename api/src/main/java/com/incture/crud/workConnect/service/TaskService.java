@@ -88,14 +88,22 @@ public class TaskService {
     public String fetchData() throws IOException, InterruptedException {
         //int flag=0;
         ArrayList<Task> op = new ArrayList<Task>();
-        
-        
+        Date x = repository.retrieveLast();
+//        System.out.println(x);
         String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
 		String token = "Bearer "+bot_token;
 		String channel_id = "C0313AG3ZPB";
+		String url_str = "";
+        if(x == null) {
+        	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id +"&pretty=1";
+        }
+        else {
+        	long ts = (x.getTime()/1000)+1;
+        	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id + "&oldest="+ String.valueOf(ts)+ "&pretty=1";
+        }
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpRequest request = HttpRequest.newBuilder()
-		                .uri(URI.create("https://slack.com/api/conversations.history" + "?channel=" + channel_id + "&pretty=1"))
+		                .uri(URI.create(url_str))
 		                .header("Authorization",token)
 		                .header("Content-Type","application/x-www-form-urlencoded")
 		                .POST(HttpRequest.BodyPublishers.noBody())
@@ -105,32 +113,37 @@ public class TaskService {
 
 		HttpResponse<String> response;
 		
-		response = client.send(request,HttpResponse.BodyHandlers.ofString());
-		//System.out.println(response.body()); 
+		response = client.send(request,HttpResponse.BodyHandlers.ofString());		
 
 		JSONObject taskObj = new JSONObject(response.body());
 		JSONArray taskArr = taskObj.getJSONArray("messages");
- 	
-		for(int i =0;i<taskArr.length();i++) {
-			JSONObject tempObj = taskArr.getJSONObject(i); 
-			if(tempObj.getString("type").equals("message")) {
-				if(tempObj.getString("user").equals("U030NQSKSCB")) {
-					continue;
+		String optxt = "";
+		if(taskArr.length()>0) {
+			optxt = "Added "+ taskArr.length() +" tasks to database";
+			for(int i =0;i<taskArr.length();i++) {
+				JSONObject tempObj = taskArr.getJSONObject(i);
+				if(tempObj.getString("type").equals("message")) {
+					if(tempObj.getString("user").equals("U030NQSKSCB")) {
+						continue;
+					}
+					String tempEmail = userName(tempObj.getString("user"));
+					Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
+					Task newTask = new Task();
+			        newTask.setTaskName(tempObj.getString("text"));
+			        newTask.setEmail(tempEmail);
+			        newTask.setPlatform("slack");
+			        newTask.setStatus(0);
+			        newTask.setTime(d);
+			        op.add(0,newTask);
 				}
-				String tempEmail = userName(tempObj.getString("user"));
-				Date d = new Date((long)Double.parseDouble(tempObj.getString("ts")));
-				Task newTask = new Task();
-		        newTask.setTaskName(tempObj.getString("text"));
-		        newTask.setEmail(tempEmail);
-		        newTask.setPlatform("slack");
-		        newTask.setStatus(0);
-		        newTask.setTime(d);
-		        op.add(newTask);
 			}
+			
+			repository.saveAll(op);
 		}
-		
-		repository.saveAll(op);
-		return "Updated the Database";
+		else {
+			optxt = "No task to add to database";
+		}
+		return optxt;
     }
     
     public String deleteTask(int id) {
