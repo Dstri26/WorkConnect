@@ -29,38 +29,36 @@ public class TaskService {
 	
     @Autowired
     private TaskRepository repository;
-    
-    //Service to add single task to database
+
     public Task saveTask(Task task) {
         return repository.save(task);
     }
     
-    //Service to add multiple tasks to database
+
     public List<Task> saveTasks(List<Task> tasks) {
         return repository.saveAll(tasks);
     }
     
-    //Service to retrieve all tasks from database
+    
     public List<Task> getTasks() {
         return repository.findAll();
     }
     
-    //Service to retrieve task from database by id
+
     public Task getTaskById(int id) {
         return repository.findById(id).orElse(null);
     }
     
-    //Service to retrieve tasks from database by email
+
     public List<Task> getTaskByEmail(String email) {
         return repository.findByEmail(email);
     }
     
-    //Service to retrieve task from database by email and platform
+
     public List<Task> getTaskByEmailPlatform(String email, String platform) {
         return repository.findByEmailPlatform(email,platform);
     }
     
-    //Function to retrieve email associated with a Slack User Code
     private static String userEmail(String code) throws IOException, InterruptedException {
 		if(!users.containsKey(code)) {
 			
@@ -89,7 +87,6 @@ public class TaskService {
 		}
     }
     
-    //Service to check if a message is app mention or not
     public String matchMention(String txt) throws IOException, InterruptedException {
         String regex = "<@[A-Z0-9]+>";
         Pattern pattern = Pattern.compile(regex);
@@ -100,14 +97,13 @@ public class TaskService {
             String matchedText= m.group(0);
             System.out.println(matchedText.substring(2,matchedText.length()-1));
             return userEmail(matchedText.substring(2,matchedText.length()-1));
+//            return "ad@acna.cnk";
         }
         else {
         	return null;
         }
     }
     
-    
-    //Service to fetch all the tasks from a channel
     public String fetchData() throws IOException, InterruptedException {
         //int flag=0;
         ArrayList<Task> op = new ArrayList<Task>();
@@ -154,8 +150,6 @@ public class TaskService {
 					String senderEmail = userEmail(tempObj.getString("user"));
 					Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
 					Task newTask = new Task();
-					
-					
 			        newTask.setTaskName(tempObj.getString("text"));
 			        newTask.setSender(senderEmail);
 			        newTask.setReciever(recieverEmail);
@@ -176,14 +170,11 @@ public class TaskService {
 		return optxt;
     }
     
-    
-    //Service to delete task from database by id
     public String deleteTask(int id) {
         repository.deleteById(id);
         return "Task removed " + id;
     }
     
-    //Service to update a task in database
     public Task updateTask(Task task) {
         Task existingTask = repository.findById(task.getId()).orElse(null);
         existingTask.setTaskName(task.getTaskName());
