@@ -59,7 +59,7 @@ public class TaskService {
         return repository.findByEmailPlatform(email,platform);
     }
     
-    private static String userName(String code) throws IOException, InterruptedException {
+    private static String userEmail(String code) throws IOException, InterruptedException {
 		if(!users.containsKey(code)) {
 			
 			String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
@@ -86,11 +86,22 @@ public class TaskService {
 			return users.get(code);
 		}
     }
-    public boolean matchMention(String txt) {
+    
+    public String matchMention(String txt) throws IOException, InterruptedException {
         String regex = "<@[A-Z0-9]+>";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(txt);
-        return matcher.find();
+        Matcher m = pattern.matcher(txt);
+        //System.out.println("Pattern found from "+ m.start() + " to " + (m.end() - 1));
+        boolean op = m.find();
+        if(op) {
+            String matchedText= m.group(0);
+            System.out.println(matchedText.substring(2,matchedText.length()-1));
+            return userEmail(matchedText.substring(2,matchedText.length()-1));
+//            return "ad@acna.cnk";
+        }
+        else {
+        	return null;
+        }
     }
     
     public String fetchData() throws IOException, InterruptedException {
@@ -130,16 +141,18 @@ public class TaskService {
 
 			for(int i =0;i<taskArr.length();i++) {
 				JSONObject tempObj = taskArr.getJSONObject(i);
-				if(tempObj.getString("type").equals("message") && matchMention(tempObj.getString("text"))) {
-					if(tempObj.getString("user").equals("U030NQSKSCB")) {
-						continue;
-					}
-					
-					String tempEmail = userName(tempObj.getString("user"));
+				if(tempObj.getString("user").equals("U030NQSKSCB")) {
+					continue;
+				}
+				
+				String recieverEmail = matchMention(tempObj.getString("text"));
+				if(tempObj.getString("type").equals("message") && recieverEmail!=null) {
+					String senderEmail = userEmail(tempObj.getString("user"));
 					Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
 					Task newTask = new Task();
 			        newTask.setTaskName(tempObj.getString("text"));
-			        newTask.setEmail(tempEmail);
+			        newTask.setSender(senderEmail);
+			        newTask.setReciever(recieverEmail);
 			        newTask.setPlatform("slack");
 			        newTask.setStatus(0);
 			        newTask.setTime(d);
@@ -165,7 +178,8 @@ public class TaskService {
     public Task updateTask(Task task) {
         Task existingTask = repository.findById(task.getId()).orElse(null);
         existingTask.setTaskName(task.getTaskName());
-        existingTask.setEmail(task.getEmail());
+        existingTask.setSender(task.getSender());
+        existingTask.setReciever(task.getReciever());
         existingTask.setPlatform(task.getPlatform());
         existingTask.setStatus(task.getStatus());
         return repository.save(existingTask);

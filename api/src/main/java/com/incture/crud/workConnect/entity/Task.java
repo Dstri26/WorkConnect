@@ -23,7 +23,8 @@ public class Task {
 	private int id;
 	private String taskName;
 	private String platform;
-	private String email;
+	private String sender;
+	private String reciever;
 	private int status;
 	private Date time;
 	
@@ -40,12 +41,19 @@ public class Task {
         this.taskName = tname;
     }
     
-    public String getEmail() {
-        return email;
+    public String getReciever() {
+        return reciever;
     }
 
-    public void setEmail(String em) {
-        this.email = em;
+    public void setReciever(String em) {
+        this.reciever = em;
+    }
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String em) {
+        this.sender = em;
     }
     public String getPlatform() {
         return platform;
