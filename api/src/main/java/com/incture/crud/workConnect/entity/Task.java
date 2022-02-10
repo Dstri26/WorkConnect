@@ -24,7 +24,7 @@ public class Task {
 	private String taskName;
 	private String platform;
 	private String sender;
-	private String receiver;
+	private String reciever;
 	private int status;
 	private Date time;
 	
@@ -41,12 +41,12 @@ public class Task {
         this.taskName = tname;
     }
     
-    public String getReceiver() {
-        return receiver;
+    public String getReciever() {
+        return reciever;
     }
 
-    public void setReceiver(String em) {
-        this.receiver = em;
+    public void setReciever(String em) {
+        this.reciever = em;
     }
     public String getSender() {
         return sender;

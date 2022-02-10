@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -108,21 +109,14 @@ public class TaskService {
     
     //Service to fetch all the tasks from a channel
     public String fetchData() throws IOException, InterruptedException {
-    	
-    	//List to store all the retrieved tasks to directly add in the repository
+        //int flag=0;
         ArrayList<Task> op = new ArrayList<Task>();
-        
-        //Retrieve latest date to find all the tasks after that
         Date x = repository.retrieveLast();
-        
-        //Slack Bot credentials
+//        System.out.println(x);
         String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
 		String token = "Bearer "+bot_token;
 		String channel_id = "C0313AG3ZPB";
 		String url_str = "";
-		
-		//Fetch task/messages assigned in the slack channel
-		//For initial condition when no task has been added
         if(x == null) {
         	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id +"&pretty=1";
         }
@@ -130,7 +124,6 @@ public class TaskService {
         	long ts = (x.getTime()/1000)+1;
         	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id + "&oldest="+ String.valueOf(ts)+ "&pretty=1";
         }
-        
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpRequest request = HttpRequest.newBuilder()
 		                .uri(URI.create(url_str))
@@ -138,55 +131,48 @@ public class TaskService {
 		                .header("Content-Type","application/x-www-form-urlencoded")
 		                .POST(HttpRequest.BodyPublishers.noBody())
 		                .build();
+		
+		
+
 		HttpResponse<String> response;
 		
-		//Received response json for the requested tasks
 		response = client.send(request,HttpResponse.BodyHandlers.ofString());		
-		System.out.println(response.body());
+		//System.out.println(response.body());
 		JSONObject taskObj = new JSONObject(response.body());
 		JSONArray taskArr = taskObj.getJSONArray("messages");
-		
-		//Text to send as a response to client
 		String optxt = "";
 
 
 			for(int i =0;i<taskArr.length();i++) {
 				JSONObject tempObj = taskArr.getJSONObject(i);
-				
-				//Removes the bot messages
 				if(tempObj.getString("user").equals("U030NQSKSCB")) {
 					continue;
 				}
 				
-				//Fetching all the receiver(app mentioned) emails
-				String receiverEmail = matchMention(tempObj.getString("text"));
-				
-				//Checking for app mentions messages only
-				if(tempObj.getString("type").equals("message") && receiverEmail!=null) {
+				String recieverEmail = matchMention(tempObj.getString("text"));
+				if(tempObj.getString("type").equals("message") && recieverEmail!=null) {
 					String senderEmail = userEmail(tempObj.getString("user"));
 					Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
-					
-					//Creating and adding a new Task object to the output tasks array
 					Task newTask = new Task();
-					newTask.setTaskName(tempObj.getString("text"));
+					
+					
+			        newTask.setTaskName(tempObj.getString("text"));
 			        newTask.setSender(senderEmail);
-			        newTask.setReceiver(receiverEmail);
+			        newTask.setReciever(recieverEmail);
 			        newTask.setPlatform("slack");
 			        newTask.setStatus(0);
 			        newTask.setTime(d);
 			        op.add(0,newTask);
 				}
 			}
-		
-		//Adding tasks to database if tasks available
+			
 		if(op.size()>0) {
 			optxt = "Added "+ op.size() +" tasks to database";
-			//repository.saveAll(op);
+			repository.saveAll(op);
 		}
 		else {
 			optxt = "No task to add to database";
 		}
-		
 		return optxt;
     }
     
@@ -202,7 +188,7 @@ public class TaskService {
         Task existingTask = repository.findById(task.getId()).orElse(null);
         existingTask.setTaskName(task.getTaskName());
         existingTask.setSender(task.getSender());
-        existingTask.setReceiver(task.getReceiver());
+        existingTask.setReciever(task.getReciever());
         existingTask.setPlatform(task.getPlatform());
         existingTask.setStatus(task.getStatus());
         return repository.save(existingTask);
