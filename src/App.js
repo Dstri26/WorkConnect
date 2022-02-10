@@ -1,5 +1,5 @@
 import './App.css';
-import Sidebar from './Sidebar';
+import Navbar from './Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import TaskPage from './TaskPage';
 import Home from './Home';
@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
     <div className="App">
-      <Sidebar></Sidebar>
+      <Navbar></Navbar>
         <div className="content">
           <Routes>
             <Route path="/" element={<Home/>} />

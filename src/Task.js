@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
     
 const Task = ({task}) => {
     const navigate = useNavigate();
-
+    console.log(task);
     
     const handleDelete= (id,platform) => {
         fetch('http://localhost:9191/delete/'+id,{
@@ -21,8 +21,8 @@ const Task = ({task}) => {
                     <div className="row">
                         <div className="d-flex col-md-11 align-items-center">
                             <div>
-                                <small>{task.time} :</small>
-                                <p><em>{task.taskName}</em></p>
+                                <small><strong>{task.sender}</strong> | {Date(task.time).slice(3, 25)} :</small>
+                                <p className="taskTxt"><em>{task.taskName}</em></p>
                             </div>
                             
                         </div>
