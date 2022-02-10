@@ -89,20 +89,16 @@ public class TaskService {
     }
     
     //Service to check if a message is app mention or not
-    public String matchMention(String txt) throws IOException, InterruptedException {
+    public ArrayList<String> matchMention(String txt) throws IOException, InterruptedException {
+    	ArrayList<String> res = new ArrayList<String>();
         String regex = "<@[A-Z0-9]+>";
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(txt);
-        //System.out.println("Pattern found from "+ m.start() + " to " + (m.end() - 1));
-        boolean op = m.find();
-        if(op) {
-            String matchedText= m.group(0);
-            System.out.println(matchedText.substring(2,matchedText.length()-1));
-            return userEmail(matchedText.substring(2,matchedText.length()-1));
+        while (m.find()) {
+        	String matchedText= m.group();
+        	res.add(userEmail(matchedText.substring(2,matchedText.length()-1)));
         }
-        else {
-        	return null;
-        }
+        return res;
     }
     
     
@@ -142,7 +138,7 @@ public class TaskService {
 		
 		//Received response json for the requested tasks
 		response = client.send(request,HttpResponse.BodyHandlers.ofString());		
-		System.out.println(response.body());
+		//System.out.println(response.body());
 		JSONObject taskObj = new JSONObject(response.body());
 		JSONArray taskArr = taskObj.getJSONArray("messages");
 		
@@ -159,29 +155,33 @@ public class TaskService {
 				}
 				
 				//Fetching all the receiver(app mentioned) emails
-				String receiverEmail = matchMention(tempObj.getString("text"));
+				ArrayList<String> receiverEmails = matchMention(tempObj.getString("text"));
 				
 				//Checking for app mentions messages only
-				if(tempObj.getString("type").equals("message") && receiverEmail!=null) {
+				if(tempObj.getString("type").equals("message") && receiverEmails.size()>0) {
 					String senderEmail = userEmail(tempObj.getString("user"));
 					Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
 					
-					//Creating and adding a new Task object to the output tasks array
-					Task newTask = new Task();
-					newTask.setTaskName(tempObj.getString("text"));
-			        newTask.setSender(senderEmail);
-			        newTask.setReceiver(receiverEmail);
-			        newTask.setPlatform("slack");
-			        newTask.setStatus(0);
-			        newTask.setTime(d);
-			        op.add(0,newTask);
+					//Adding multiple tasks for multiple mentions
+					for (String rem : receiverEmails) {
+					
+						//Creating and adding a new Task object to the output tasks array
+						Task newTask = new Task();
+						newTask.setTaskName(tempObj.getString("text"));
+				        newTask.setSender(senderEmail);
+				        newTask.setReceiver(rem);
+				        newTask.setPlatform("slack");
+				        newTask.setStatus(0);
+				        newTask.setTime(d);
+				        op.add(0,newTask);
+					}
 				}
 			}
 		
 		//Adding tasks to database if tasks available
 		if(op.size()>0) {
 			optxt = "Added "+ op.size() +" tasks to database";
-			//repository.saveAll(op);
+			repository.saveAll(op);
 		}
 		else {
 			optxt = "No task to add to database";

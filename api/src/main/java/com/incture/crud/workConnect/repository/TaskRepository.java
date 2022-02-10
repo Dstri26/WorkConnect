@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface TaskRepository extends JpaRepository<Task,Integer>{
-	@Query(value = "SELECT e FROM Task e WHERE e.reciever = :email AND e.platform = :platform")
+	@Query(value = "SELECT e FROM Task e WHERE e.receiver = :email AND e.platform = :platform")
     List<Task> findByEmailPlatform(@Param("email") String email, @Param("platform") String platform);
 	
 	@Query(value = "SELECT e FROM Task e WHERE e.receiver = :email")
