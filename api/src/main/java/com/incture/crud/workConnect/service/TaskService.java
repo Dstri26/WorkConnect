@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.repository.TaskRepository;
@@ -84,6 +86,12 @@ public class TaskService {
 			return users.get(code);
 		}
     }
+    public boolean matchMention(String txt) {
+        String regex = "<@[A-Z0-9]+>";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(txt);
+        return matcher.find();
+    }
     
     public String fetchData() throws IOException, InterruptedException {
         //int flag=0;
@@ -114,18 +122,19 @@ public class TaskService {
 		HttpResponse<String> response;
 		
 		response = client.send(request,HttpResponse.BodyHandlers.ofString());		
-
+		//System.out.println(response.body());
 		JSONObject taskObj = new JSONObject(response.body());
 		JSONArray taskArr = taskObj.getJSONArray("messages");
 		String optxt = "";
-		if(taskArr.length()>0) {
-			optxt = "Added "+ taskArr.length() +" tasks to database";
+
+
 			for(int i =0;i<taskArr.length();i++) {
 				JSONObject tempObj = taskArr.getJSONObject(i);
-				if(tempObj.getString("type").equals("message")) {
+				if(tempObj.getString("type").equals("message") && matchMention(tempObj.getString("text"))) {
 					if(tempObj.getString("user").equals("U030NQSKSCB")) {
 						continue;
 					}
+					
 					String tempEmail = userName(tempObj.getString("user"));
 					Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
 					Task newTask = new Task();
@@ -138,6 +147,8 @@ public class TaskService {
 				}
 			}
 			
+		if(op.size()>0) {
+			optxt = "Added "+ op.size() +" tasks to database";
 			repository.saveAll(op);
 		}
 		else {
