@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.incture.crud.workConnect.entity.Task;
+import com.incture.crud.workConnect.service.SlackService;
 import com.incture.crud.workConnect.service.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
     @Autowired
     private TaskService service;
+    
+    @Autowired
+    private SlackService slackService;
 
     @PostMapping("/addTask")
     public Task addTask(@RequestBody Task task) {
@@ -37,9 +41,9 @@ public class TaskController {
         return service.getTasks();
     }
     
-    @GetMapping("/fetch")
+    @GetMapping("/fetchSlack")
     public String fetchData() throws IOException, InterruptedException {
-        return service.fetchData();
+        return slackService.fetchSlackData();
     }
     @GetMapping("/TaskById/{id}")
     public Task findTaskById(@PathVariable int id) {

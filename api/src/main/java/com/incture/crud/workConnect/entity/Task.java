@@ -23,7 +23,6 @@ public class Task {
 	private int id;
 	private String taskName;
 	private String platform;
-	private String sender;
 	private String receiver;
 	private int status;
 	private Date time;
@@ -47,13 +46,6 @@ public class Task {
 
     public void setReceiver(String em) {
         this.receiver = em;
-    }
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String em) {
-        this.sender = em;
     }
     public String getPlatform() {
         return platform;
