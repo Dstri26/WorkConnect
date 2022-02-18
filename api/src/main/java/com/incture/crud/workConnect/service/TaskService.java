@@ -1,30 +1,14 @@
 package com.incture.crud.workConnect.service;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.repository.TaskRepository;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskService {
-	
-	private static HashMap<String,String> users= new HashMap<String,String>();
-	
+public class TaskService {	
 	
     @Autowired
     private TaskRepository repository;
