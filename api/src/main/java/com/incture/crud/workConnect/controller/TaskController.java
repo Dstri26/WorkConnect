@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.incture.crud.workConnect.entity.Task;
+import com.incture.crud.workConnect.service.AsanaService;
 import com.incture.crud.workConnect.service.SlackService;
 import com.incture.crud.workConnect.service.TaskService;
 
@@ -25,7 +26,10 @@ public class TaskController {
     
     @Autowired
     private SlackService slackService;
-
+    
+    @Autowired
+    private AsanaService asanaService;
+    
     @PostMapping("/addTask")
     public Task addTask(@RequestBody Task task) {
         return service.saveTask(task);
@@ -42,8 +46,12 @@ public class TaskController {
     }
     
     @GetMapping("/fetchSlack")
-    public String fetchData() throws IOException, InterruptedException {
+    public String fetchSlackData() throws IOException, InterruptedException {
         return slackService.fetchSlackData();
+    }
+    @GetMapping("/fetchAsana")
+    public String fetchAsanaData() throws IOException, InterruptedException {
+        return asanaService.fetchAsanaData();
     }
     @GetMapping("/TaskById/{id}")
     public Task findTaskById(@PathVariable int id) {

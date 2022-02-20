@@ -23,8 +23,6 @@ import org.springframework.stereotype.Service;
 public class SlackService {
 	
 	private static HashMap<String,String> users= new HashMap<String,String>();
-	
-	
     @Autowired
     private TaskRepository repository;
 
