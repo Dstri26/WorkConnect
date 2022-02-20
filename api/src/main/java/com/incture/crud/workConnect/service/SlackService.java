@@ -76,7 +76,7 @@ public class SlackService {
         ArrayList<Task> op = new ArrayList<Task>();
         
         //Retrieve latest date to find all the tasks after that
-        Date x = repository.retrieveLast();
+        Date x = repository.retrieveSlackLast();
         
         //Slack Bot credentials
         String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
@@ -145,11 +145,11 @@ public class SlackService {
 		
 		//Adding tasks to database if tasks available
 		if(op.size()>0) {
-			optxt = "Added "+ op.size() +" tasks to database";
+			optxt = "Added "+ op.size() +" Slack tasks to database";
 			repository.saveAll(op);
 		}
 		else {
-			optxt = "No task to add to database";
+			optxt = "No slack task to add to database";
 		}
 		
 		return optxt;

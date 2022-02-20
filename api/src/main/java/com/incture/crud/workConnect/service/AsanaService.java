@@ -8,8 +8,6 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.repository.TaskRepository;
@@ -47,13 +45,13 @@ public class AsanaService {
 		{
 			String email_id = arr.getJSONObject(i).getString("email");
 			String userGid = arr.getJSONObject(i).getString("gid");
-		    System.out.println(userGid+" "+email_id);
 		    users.put(userGid, email_id);
 		}
 	}
 	
     public String fetchAsanaData() throws IOException, InterruptedException {
     	ArrayList<Task> op = new ArrayList<Task>();
+    	String optxt="";
     	String wsId = "";
     	
     	//Fetch Workspace ID
@@ -107,6 +105,9 @@ public class AsanaService {
 			JSONObject assignee = tempObj.getJSONObject("assignee");
 			
 			Task newTask = new Task();
+			if(repository.checkAsana(users.get(assignee.getString("gid")),"asana",tempObj.getString("name")) != null){
+				continue;
+			}
 			newTask.setTaskName(tempObj.getString("name"));
 	        newTask.setReceiver(users.get(assignee.getString("gid")));
 	        newTask.setPlatform("asana");
@@ -115,7 +116,16 @@ public class AsanaService {
 	        op.add(0,newTask);
 			
 		}
-		repository.saveAll(op);
-    	return wsId+" "+prId+" "+prName;
+
+		//Adding tasks to database if tasks available
+		if(op.size()>0) {
+			optxt = "Added "+ op.size() +" Asana tasks to database";
+			repository.saveAll(op);
+		}
+		else {
+			optxt = "No asana task to add to database";
+		}
+		
+		return optxt;
     }
  }

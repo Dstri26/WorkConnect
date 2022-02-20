@@ -18,5 +18,8 @@ public interface TaskRepository extends JpaRepository<Task,Integer>{
     List<Task> findByEmail(@Param("email") String email);
 	
 	@Query(value = "SELECT e.time FROM Task e where e.platform='slack' ORDER BY e.time DESC LIMIT 1", nativeQuery=true)
-    Date retrieveLast();
+    Date retrieveSlackLast();
+	
+	@Query(value = "SELECT e FROM Task e WHERE e.receiver = :email AND e.platform = :platform AND e.taskName =:taskName")
+    Task checkAsana(@Param("email") String email, @Param("platform") String platform, @Param("taskName") String taskName);
 }
