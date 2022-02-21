@@ -34,7 +34,8 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item ">
-                            <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;Profile</Link>
+                        {sessionStorage.getItem("wcEmail") && <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;{sessionStorage.getItem("wcEmail")}</Link>}
+                        {!sessionStorage.getItem("wcEmail") && <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;Profile</Link>}
                         </li>
                         <li className="nav-item">
                             {sessionStorage.getItem("wcEmail") && <Link to="/" onClick={handleLogout} className="nav-link"><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Signout</Link> }
