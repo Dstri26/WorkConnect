@@ -3,7 +3,10 @@ package com.incture.crud.workConnect.service;
 import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.repository.TaskRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,25 +53,28 @@ public class TaskService {
     }
     
     //Service to update task from database by id
-    public String updateStatus(int id) {
+    public Map<String, String> updateStatus(int id) {
+    	HashMap<String, String> res = new HashMap<>();
     	Task newTask = repository.findById(id).orElse(null);
-    	String msg="";
     	if(newTask==null) {
-    		msg = "Couldnt update status";
+    		res.put("status", "0");
+    		res.put("action", "failed");
     	}
     	else {
     		if(newTask.getStatus()==0) {
         		newTask.setStatus(1);
         		newTask = updateTask(newTask);
-        		msg="Task Updated";
+        		res.put("status", "1");
+        		res.put("action", "update");
         	}
         	else if(newTask.getStatus()==1) {
         		repository.deleteById(id);
-        		msg="Task Deleted";
+        		res.put("status", "1");
+        		res.put("action", "delete");
         	}
     	}
     	
-        return msg;
+        return res;
     }
     
     //Service to update a task in database

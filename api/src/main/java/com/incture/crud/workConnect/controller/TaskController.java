@@ -2,6 +2,7 @@ package com.incture.crud.workConnect.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.service.AsanaService;
@@ -55,7 +56,7 @@ public class TaskController {
     }
     
     @GetMapping("/updateStatus/{id}")
-    public String updateStatus(@PathVariable int id) {
+    public Map<String, String> updateStatus(@PathVariable int id) {
         return service.updateStatus(id);
     }
     
