@@ -57,7 +57,7 @@ body{
 }
 .home-card{
   height: auto;
-  width:18rem;
+  min-width:30vw;
   background: #e6bc35;
   color: #ffffff;
   border-radius: 10px;
@@ -110,7 +110,7 @@ body{
   width: 70%;
 }
 .text-muted{
-  pointer-events: none;
+  cursor: pointer;
 }
 .taskTxt{
   background:#ffffff;

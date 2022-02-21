@@ -24,21 +24,13 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
+                <div className="col-md-4"></div>
                 <div className="col-md-4">
-                    <div className="card  home-card">
+                    <div className="card home-card">
                         <div className="card-body text-center">
                             <p className="plat-txt">Slack</p>
                             <p className="task-txt">Tasks</p>
                             <Link to="/slack"  className="btn btn-md btn-light">Explore</Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-4 ">
-                    <div className="card home-card">
-                        <div className="card-body text-center">
-                            <p className="plat-txt">Workday</p>
-                            <p className="task-txt">Tasks</p>
-                            <Link to="/workday"  className="btn btn-md btn-light">Explore</Link>
                         </div>
                     </div>
                 </div>

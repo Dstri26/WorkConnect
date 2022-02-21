@@ -53,6 +53,12 @@ public class TaskController {
     public String fetchAsanaData() throws IOException, InterruptedException {
         return asanaService.fetchAsanaData();
     }
+    
+    @GetMapping("/updateStatus/{id}")
+    public String updateStatus(@PathVariable int id) {
+        return service.updateStatus(id);
+    }
+    
     @GetMapping("/TaskById/{id}")
     public Task findTaskById(@PathVariable int id) {
         return service.getTaskById(id);

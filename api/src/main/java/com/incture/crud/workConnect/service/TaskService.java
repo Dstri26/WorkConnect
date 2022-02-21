@@ -49,6 +49,28 @@ public class TaskService {
         return "Task removed " + id;
     }
     
+    //Service to update task from database by id
+    public String updateStatus(int id) {
+    	Task newTask = repository.findById(id).orElse(null);
+    	String msg="";
+    	if(newTask==null) {
+    		msg = "Couldnt update status";
+    	}
+    	else {
+    		if(newTask.getStatus()==0) {
+        		newTask.setStatus(1);
+        		newTask = updateTask(newTask);
+        		msg="Task Updated";
+        	}
+        	else if(newTask.getStatus()==1) {
+        		repository.deleteById(id);
+        		msg="Task Deleted";
+        	}
+    	}
+    	
+        return msg;
+    }
+    
     //Service to update a task in database
     public Task updateTask(Task task) {
         Task existingTask = repository.findById(task.getId()).orElse(null);

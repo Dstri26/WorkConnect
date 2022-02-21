@@ -85,7 +85,7 @@ public class AsanaService {
 		
 		JSONArray prArr = prObj.getJSONArray("data");
 		String prId = prArr.getJSONObject(0).getString("gid");
-		String prName = prArr.getJSONObject(0).getString("name");
+		//String prName = prArr.getJSONObject(0).getString("name");
 		
 		//Fetch tasks from project
 		HttpRequest request = HttpRequest.newBuilder()

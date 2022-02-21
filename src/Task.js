@@ -6,11 +6,11 @@ const Task = ({task}) => {
     const navigate = useNavigate();
     console.log(task);
     
-    const handleDelete= (id,platform) => {
-        fetch('http://localhost:9191/delete/'+id,{
-            method : 'DELETE',
-        }).then(()=>{
-            console.log('Blog deleted');
+    const handleUpdate= (id,platform) => {
+        fetch('http://localhost:9191/updateStatus/'+id,{
+            method : 'GET',
+        }).then((res)=>{
+            console.log(res);
             navigate('/');
             
         })
@@ -29,8 +29,7 @@ const Task = ({task}) => {
                         <div className="col-md-1 text-center d-flex align-items-center justify-content-center symbols">
                             <div className="row">
                                 <div className="col-12">
-                                    <i onClick={() => handleDelete(task.id)} className={"fas " + ( task.status === 0 ? 'fa-check ' : 'fa-times text-muted')}></i>
-
+                                    <i onClick={() => handleUpdate(task.id)} className={"fas " + ( task.status === 0 ? 'fa-check text-success' : 'fa-trash text-danger')}></i>
                                 </div>
                             </div>
                         </div>
