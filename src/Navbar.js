@@ -7,7 +7,7 @@ const Navbar = () => {
     // const [isLogout,setIsLogout] =  useState(true);
     const navigate = useNavigate();
     const handleLogout= (e) => {
-        
+        e.preventDefault()
         let email= sessionStorage.getItem("wcEmail");
         const payload = {email};
         fetch('http://localhost:9191/logoutUser/',{
@@ -35,7 +35,6 @@ const Navbar = () => {
                     <ul className="navbar-nav">
                         <li className="nav-item ">
                         {sessionStorage.getItem("wcEmail") && <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;{sessionStorage.getItem("wcEmail")}</Link>}
-                        {!sessionStorage.getItem("wcEmail") && <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;Profile</Link>}
                         </li>
                         <li className="nav-item">
                             {sessionStorage.getItem("wcEmail") && <Link to="/" onClick={handleLogout} className="nav-link"><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Signout</Link> }

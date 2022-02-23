@@ -1,0 +1,13 @@
+aws id pass:-
+ashishkumarpanda364@gmail.com
+inkathon@123
+
+vesta id pass:-
+https://13.127.82.222:8083
+admin
+zprMYemXaI
+
+phpmyadmin id pass:
+http://13.127.82.222:3306
+admin_wc
+inkathon@123

@@ -11,7 +11,6 @@ const TaskPage = ({platform}) =>{
     })
     const email = sessionStorage.getItem("wcEmail");
     const [tasks,setTasks] =  useState(null);
-    
     useEffect(() => {
         fetch('http://localhost:9191/TaskByEmail/'+ email)
             .then((res)=>{
@@ -19,6 +18,7 @@ const TaskPage = ({platform}) =>{
             })
             .then((data)=>{
                 setTasks(data);
+                console.log(data)
             })
     },[email])
 
@@ -49,7 +49,6 @@ const TaskPage = ({platform}) =>{
             }
         })
     }
-
 
     return(
         <div className="Tasks-tasks">

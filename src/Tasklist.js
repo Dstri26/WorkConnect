@@ -1,4 +1,5 @@
 const TaskList = ({tasks,handleUpdate}) => {
+
     return ( 
         <div className="task-list ">
             { tasks.map((task)=>(
@@ -7,7 +8,6 @@ const TaskList = ({tasks,handleUpdate}) => {
                         <div className="row">
                             <div className="d-flex col-md-11 align-items-center">
                                 <div>
-                                    <small><strong>{task.sender}</strong> | {Date(task.time).slice(3, 25)} :</small>
                                     <p className="taskTxt"><em>{task.taskName}</em></p>
                                 </div>
                                 

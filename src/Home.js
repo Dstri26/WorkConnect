@@ -5,24 +5,25 @@ import { Link,useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const navigate = useNavigate();
-    //console.log(sessionStorage.getItem("wcEmail"));
-    const [update, setUpdate] = useState(true);
-    useEffect(() => {
-        fetch('http://localhost:9191/fetchSlack/')
-        .then((res)=>{
-            console.log("Slack Updated!")
-        })
-        fetch('http://localhost:9191/fetchAsana/')
-        .then((res)=>{
-            console.log("Asana Updated!")
-            setUpdate(null)
-        })
-      }, []);
     useEffect(() => {
         if (sessionStorage.getItem("wcEmail") === null) {
             navigate('/login');
         }
     })
+    
+    //console.log(sessionStorage.getItem("wcEmail"));
+    const [slackUpdate, setSlackUpdate] = useState(true);
+    const [asanaUpdate, setAsanaUpdate] = useState(true);
+    useEffect(() => {
+        fetch('http://localhost:9191/fetchSlack/')
+        .then((res)=>{
+            setSlackUpdate(null)
+        })
+        fetch('http://localhost:9191/fetchAsana/')
+        .then((res)=>{
+            setAsanaUpdate(null)
+        })
+      }, []);
     return ( 
         <div className="home d-flex align-items-center justify-content-center">
             <div className="row">
@@ -31,9 +32,9 @@ const Home = () => {
                         <div className="card-body text-center">
                             <p className="plat-txt">Asana</p>
                             <p className="task-txt">Tasks</p>
-                            {!update && <Link to="/asana"  className="btn btn-md btn-light">Explore</Link>}
+                            {!asanaUpdate && <Link to="/asana"  className="btn btn-md btn-light">Explore</Link>}
                         </div>
-                        {update && <div className="card-footer">
+                        {asanaUpdate && <div className="card-footer">
                              <small>Updating...</small>   
                         </div>} 
                     </div>
@@ -44,9 +45,9 @@ const Home = () => {
                         <div className="card-body text-center">
                             <p className="plat-txt">Slack</p>
                             <p className="task-txt">Tasks</p>
-                            {!update && <Link to="/slack"  className="btn btn-md btn-light">Explore</Link>}
+                            {!slackUpdate && <Link to="/slack"  className="btn btn-md btn-light">Explore</Link>}
                         </div>
-                        {update && <div className="card-footer">
+                        {slackUpdate && <div className="card-footer">
                              <small>Updating...</small>   
                         </div>} 
                     </div>

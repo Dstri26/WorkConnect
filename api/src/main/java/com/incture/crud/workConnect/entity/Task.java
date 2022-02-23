@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="TASK")
+@Table(name="task")
 public class Task {
 	
 	@Id
@@ -25,6 +25,7 @@ public class Task {
 	private String platform;
 	private String receiver;
 	private int status;
+	private int isDeleted=0;
 	private Date time;
 	
 
@@ -62,6 +63,14 @@ public class Task {
 
     public void setStatus(int s) {
         this.status = s;
+    }
+    
+    public int getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(int dl) {
+        this.isDeleted = dl;
     }
     public Date getTime() {
         return time;

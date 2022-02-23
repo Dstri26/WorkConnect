@@ -15,10 +15,10 @@ public interface TaskRepository extends JpaRepository<Task,Integer>{
 	@Query(value = "SELECT e FROM Task e WHERE e.receiver = :email AND e.platform = :platform")
     List<Task> findByEmailPlatform(@Param("email") String email, @Param("platform") String platform);
 	
-	@Query(value = "SELECT e FROM Task e WHERE e.receiver = :email")
+	@Query(value = "SELECT e FROM Task e WHERE e.receiver = :email AND e.isDeleted = 0 ORDER BY e.id DESC")
     List<Task> findByEmail(@Param("email") String email);
 	
-	@Query(value = "SELECT e.time FROM Task e where e.platform='slack' ORDER BY e.time DESC LIMIT 1", nativeQuery=true)
+	@Query(value = "SELECT e.time FROM task e where e.platform='slack' ORDER BY e.time DESC LIMIT 1", nativeQuery=true)
     Date retrieveSlackLast();
 	
 	@Query(value = "SELECT e FROM Task e WHERE e.receiver = :email AND e.platform = :platform AND e.taskName =:taskName")

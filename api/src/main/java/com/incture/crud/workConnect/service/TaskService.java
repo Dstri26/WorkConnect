@@ -68,7 +68,8 @@ public class TaskService {
         		res.put("action", "update");
         	}
         	else if(newTask.getStatus()==1) {
-        		repository.deleteById(id);
+        		newTask.setIsDeleted(1);
+        		newTask = updateTask(newTask);
         		res.put("status", "1");
         		res.put("action", "delete");
         	}

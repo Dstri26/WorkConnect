@@ -137,6 +137,7 @@ public class SlackService {
 				        newTask.setReceiver(rem);
 				        newTask.setPlatform("slack");
 				        newTask.setStatus(0);
+				        newTask.setIsDeleted(0);
 				        newTask.setTime(d);
 				        op.add(0,newTask);
 					}

@@ -112,6 +112,7 @@ public class AsanaService {
 	        newTask.setReceiver(users.get(assignee.getString("gid")));
 	        newTask.setPlatform("asana");
 	        newTask.setStatus(0);
+	        newTask.setIsDeleted(0);
 	        newTask.setTime(d);
 	        op.add(0,newTask);
 			
