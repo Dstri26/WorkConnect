@@ -10,7 +10,7 @@ const Navbar = () => {
         e.preventDefault()
         let email= sessionStorage.getItem("wcEmail");
         const payload = {email};
-        fetch('http://13.127.82.222:9191/logoutUser/',{
+        fetch('//13.127.82.222:9191/logoutUser/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)
