@@ -28,9 +28,6 @@ public class User{
 	private String phoneno;
 	private String loggedIn = "false";
 	
-	public User() {
-    }
-	
     public User(String email, String password) {
 	    this.email = email;
 	    this.password = password;
