@@ -26,7 +26,7 @@ const Login = () => {
         var email = lemail;
         var password = lpassword;
         const payload = {email, password};
-        fetch('http://localhost:9191/loginUser/',{
+        fetch('//13.127.82.222:9191/loginUser/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)
@@ -52,7 +52,7 @@ const Login = () => {
         var password = rpassword;
         var phoneNo = rphone;
         const payload = {name, email, password, phoneNo};
-        fetch('http://localhost:9191/registerUser/',{
+        fetch('//13.127.82.222:9191/registerUser/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)

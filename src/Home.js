@@ -15,11 +15,11 @@ const Home = () => {
     const [slackUpdate, setSlackUpdate] = useState(true);
     const [asanaUpdate, setAsanaUpdate] = useState(true);
     useEffect(() => {
-        fetch('http://localhost:9191/fetchSlack/')
+        fetch('//13.127.82.222:9191/fetchSlack/')
         .then((res)=>{
             setSlackUpdate(null)
         })
-        fetch('http://localhost:9191/fetchAsana/')
+        fetch('//13.127.82.222:9191/fetchAsana/')
         .then((res)=>{
             setAsanaUpdate(null)
         })
