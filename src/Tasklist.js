@@ -8,6 +8,7 @@ const TaskList = ({tasks,handleUpdate}) => {
                         <div className="row">
                             <div className="d-flex col-md-11 align-items-center">
                                 <div>
+                                    <p className="time"><strong>{task.time.slice(0,10)} </strong><small>{task.time.slice(11,19)}</small> :</p>
                                     <p className="taskTxt"><em>{task.taskName}</em></p>
                                 </div>
                                 
