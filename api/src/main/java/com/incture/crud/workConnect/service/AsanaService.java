@@ -15,6 +15,7 @@ import com.incture.crud.workConnect.repository.TaskRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,9 +25,15 @@ public class AsanaService {
     @Autowired
     private TaskRepository repository;
     
+    @Value("${app.asana.token}")
+    private String AsanaToken;
+    
+    @Value("${app.asana.access}")
+    private String AsanaAccess;
+    
 	public void updateEmail(String wid) throws IOException, InterruptedException
 	{
-		String bot_token = "1/1201799234315739:a4ddf5bba1cfe7c19040aff0639f599a";
+		String bot_token = this.AsanaToken;
 		String token = "Bearer " + bot_token;
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpRequest request = HttpRequest.newBuilder()
@@ -54,8 +61,13 @@ public class AsanaService {
     	String optxt="";
     	String wsId = "";
     	
+        if(this.AsanaAccess.equals("no")) {
+        	return "No Access for Asana";
+        }
+        
+        
     	//Fetch Workspace ID
-    	String apiToken = "1/1201799234315739:a4ddf5bba1cfe7c19040aff0639f599a";
+    	String apiToken =  this.AsanaToken;
     	String token = "Bearer " + apiToken;
     	HttpClient client = HttpClient.newBuilder().build();
     	HttpRequest wsRequest = HttpRequest.newBuilder()
