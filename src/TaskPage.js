@@ -32,11 +32,12 @@ const TaskPage = ({platform}) =>{
             if (data.status==="1") {
                 
                 if (data.action==="delete") {
-                    console.log("Deleted")
+                    alert("Task Deleted")
                     const newTasks = tasks.filter(task => task.id!==id);
                     setTasks(newTasks);
                 }
                 else if(data.action==="update"){
+                    alert("Task Marked as Updated")
                     const newTasks = tasks.map(function(task){
                         if (task.id===id) {
                             task.status =1;

@@ -17,6 +17,7 @@ import com.incture.crud.workConnect.repository.TaskRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,12 +26,19 @@ public class SlackService {
 	private static HashMap<String,String> users= new HashMap<String,String>();
     @Autowired
     private TaskRepository repository;
+    
+    @Value("${app.slack.token}")
+    private String SlackToken;
+    
+    @Value("${app.slack.access}")
+    private String SlackAccess;
+    
 
     //Function to retrieve email associated with a Slack User Code
-    public static String userEmail(String code) throws IOException, InterruptedException {
+    public String userEmail(String code) throws IOException, InterruptedException {
 		if(!users.containsKey(code)) {
 			
-			String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
+			String bot_token = this.SlackToken;
 			String token = "Bearer "+bot_token;
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpRequest request = HttpRequest.newBuilder()
@@ -74,12 +82,19 @@ public class SlackService {
     	
     	//List to store all the retrieved tasks to directly add in the repository
         ArrayList<Task> op = new ArrayList<Task>();
+		
+		//Text to send as a response to client
+		String optxt = "";
+		
+        if(this.SlackAccess.equals("no")) {
+        	return "No Access for Slack";
+        }
         
         //Retrieve latest date to find all the tasks after that
         Date x = repository.retrieveSlackLast();
         
         //Slack Bot credentials
-        String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
+        String bot_token = this.SlackToken;
 		String token = "Bearer "+bot_token;
 		String channel_id = "C0313AG3ZPB";
 		String url_str = "";
@@ -108,9 +123,7 @@ public class SlackService {
 		//System.out.println(response.body());
 		JSONObject taskObj = new JSONObject(response.body());
 		JSONArray taskArr = taskObj.getJSONArray("messages");
-		
-		//Text to send as a response to client
-		String optxt = "";
+
 
 
 			for(int i =0;i<taskArr.length();i++) {
