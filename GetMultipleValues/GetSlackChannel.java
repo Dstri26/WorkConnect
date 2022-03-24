@@ -15,10 +15,6 @@ public class GetSlackChannel {
 	{
 		ArrayList<String> channels_id = new ArrayList<String>();
 		ArrayList<String> channels_name = new ArrayList<String>();
-		
-		ArrayList<String> all_channels_id = new ArrayList<String>();
-		ArrayList<String> all_channels_name = new ArrayList<String>();
-		ArrayList<String> all_channels_task = new ArrayList<String>();
 
 		String bot_token = "xoxb-2934006031602-3022842672419-YZUSvPsZTtrdJkaiKAXnex1Q";
 		String token = "Bearer "+bot_token;
