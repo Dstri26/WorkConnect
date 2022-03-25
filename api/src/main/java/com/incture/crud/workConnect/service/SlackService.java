@@ -153,7 +153,6 @@ public class SlackService {
         //Retrieve latest date to find all the tasks after that
         Date x = repository.retrieveSlackLast();
         
-        
         //Slack Bot credentials
         String bot_token = this.SlackToken;
 		String token = "Bearer "+bot_token;
