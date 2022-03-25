@@ -33,7 +33,67 @@ public class SlackService {
     @Value("${app.slack.access}")
     private String SlackAccess;
     
+    //Getting all slack channel id's
+    public ArrayList<String> getChannelId() throws IOException, InterruptedException
+    {
+    	ArrayList<String> channel_id = new ArrayList<String>();
+    	String bot_token = this.SlackToken;
+		String token = "Bearer "+bot_token;
+		HttpResponse<String> response ;
+		HttpClient client = HttpClient.newBuilder().build();
+		HttpRequest request = HttpRequest.newBuilder()
+            	.uri(URI.create("https://slack.com/api/conversations.list" + "?pretty=1"))
+            	.header("Authorization",token)
+            	.header("Content-Type","application/x-www-form-urlencoded")
+            	.POST(HttpRequest.BodyPublishers.noBody())
+            	.build();
+		
+		response = client.send(request,HttpResponse.BodyHandlers.ofString());
+		JSONObject taskObj = new JSONObject(response.body());
+		JSONArray taskArr = taskObj.getJSONArray("channels");
+		for(int i=0;i<taskArr.length();i++)
+		{
+			JSONObject obj = taskArr.getJSONObject(i);
+			channel_id.add(obj.getString("id"));
 
+		}
+    	
+    	return channel_id;
+    }
+    
+    
+   //Getting all slack channel name's
+    public ArrayList<String> getChannelName() throws IOException, InterruptedException
+    {
+    	ArrayList<String> channel_name = new ArrayList<String>();
+    	String bot_token = this.SlackToken;
+		String token = "Bearer "+bot_token;
+		HttpResponse<String> response ;
+		HttpClient client = HttpClient.newBuilder().build();
+		HttpRequest request = HttpRequest.newBuilder()
+            	.uri(URI.create("https://slack.com/api/conversations.list" + "?pretty=1"))
+            	.header("Authorization",token)
+            	.header("Content-Type","application/x-www-form-urlencoded")
+            	.POST(HttpRequest.BodyPublishers.noBody())
+            	.build();
+		
+		response = client.send(request,HttpResponse.BodyHandlers.ofString());
+		JSONObject taskObj = new JSONObject(response.body());
+		JSONArray taskArr = taskObj.getJSONArray("channels");
+		for(int i=0;i<taskArr.length();i++)
+		{
+			JSONObject obj = taskArr.getJSONObject(i);
+			channel_name.add(obj.getString("name"));
+
+		}
+    	
+    	return channel_name;
+    }
+    
+    
+    
+    
+    
     //Function to retrieve email associated with a Slack User Code
     public String userEmail(String code) throws IOException, InterruptedException {
 		if(!users.containsKey(code)) {
