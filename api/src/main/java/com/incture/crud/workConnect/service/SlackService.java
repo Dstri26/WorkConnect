@@ -140,7 +140,11 @@ public class SlackService {
 	    	
 			String channel_id = key;
 			String url_str = "";
-			
+			if(projects.get(key).equals("general")) {
+				
+				continue;
+			}
+//			
 			//Fetch task/messages assigned in the slack channel
 			//For initial condition when no task has been added
 	        if(x == null) {
@@ -174,11 +178,15 @@ public class SlackService {
 					System.out.println(tempObj);
 					System.out.println(projects.get(key));
 					
-					System.out.println(tempObj.getString("user"));
 					//Removes the bot messages
-					if(tempObj.getString("user").equals("U030NQSKSCB")) {
-						continue;
-					}
+					try {
+							if(tempObj.getString("user").equals("U030NQSKSCB")) {
+								continue;
+							}
+					    } catch (Exception e) {
+					      continue;
+					    }
+
 					
 					//Fetching all the receiver(app mentioned) emails
 					ArrayList<String> receiverEmails = matchMention(tempObj.getString("text"));
