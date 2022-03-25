@@ -27,14 +27,14 @@ const Navbar = () => {
     return ( 
         <div className="navClass">
             <nav className="navbar navbar-expand-lg">
-                <Link to="/" className="navbar-brand" >WorkConnect</Link>
+                <Link to="/" className="navbar-brand">WorkConnect</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item ">
-                        {sessionStorage.getItem("wcEmail") && <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;{sessionStorage.getItem("wcEmail")}</Link>}
+                            {sessionStorage.getItem("wcEmail") && <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;{sessionStorage.getItem("wcEmail")}</Link>}
                         </li>
                         <li className="nav-item">
                             {sessionStorage.getItem("wcEmail") && <Link to="/" onClick={handleLogout} className="nav-link"><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Signout</Link> }

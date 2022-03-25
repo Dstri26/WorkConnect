@@ -63,6 +63,7 @@ public class TaskService {
     	else {
     		if(newTask.getStatus()==0) {
         		newTask.setStatus(1);
+        		newTask.setIsCompleted(1);
         		newTask = updateTask(newTask);
         		res.put("status", "1");
         		res.put("action", "update");

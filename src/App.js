@@ -20,7 +20,6 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/asana" element={<TaskPage platform="asana"/>} />
             <Route path="/slack" element={<TaskPage platform="slack" />} />
-            <Route path="/workday" element={<TaskPage platform="workday" />} />
           </Routes>
         </div>
       </div>

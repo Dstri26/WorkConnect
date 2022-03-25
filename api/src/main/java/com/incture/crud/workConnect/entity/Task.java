@@ -26,6 +26,7 @@ public class Task {
 	private String receiver;
 	private int status;
 	private int isDeleted=0;
+	private int isCompleted=0;
 	private Date time;
 	
 
@@ -65,6 +66,13 @@ public class Task {
         this.status = s;
     }
     
+    public int getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(int cl) {
+        this.isCompleted = cl;
+    }
     public int getIsDeleted() {
         return isDeleted;
     }

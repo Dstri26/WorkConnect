@@ -33,6 +33,7 @@ public class UserService {
         res.put("status", "1");
         res.put("msg", "User Registered Successfully!");
         System.out.println("Registered user: " + newUser.toString());
+        newUser.setLoggedIn("true");
         repository.save(newUser);
         return res;
     }
