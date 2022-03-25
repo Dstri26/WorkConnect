@@ -31,6 +31,61 @@ public class AsanaService {
     @Value("${app.asana.access}")
     private String AsanaAccess;
     
+    //Get Asana project id's
+    public ArrayList<String> getProjectId() throws IOException, InterruptedException
+    {
+    	ArrayList<String> projects_id = new ArrayList<String>();
+		
+		String apiToken =  this.AsanaToken;
+    	String token = "Bearer " + apiToken;
+		HttpClient client = HttpClient.newBuilder().build();
+		HttpRequest prRequest = HttpRequest.newBuilder()
+                .uri(URI.create("https://app.asana.com/api/1.0/projects"))
+                .headers("Authorization",token)
+                .build();
+
+		HttpResponse<String> prResponse;
+		prResponse = client.send(prRequest,HttpResponse.BodyHandlers.ofString());
+		JSONObject prObj = new JSONObject(prResponse.body());
+
+		JSONArray prArr = prObj.getJSONArray("data");
+		for(int i=0;i<prArr.length();i++)
+		{
+			projects_id.add(prArr.getJSONObject(i).getString("gid"));
+		}
+		
+		return projects_id;
+    
+    }
+     
+     //Get Asana project's Name
+    public ArrayList<String> getProjectName() throws IOException, InterruptedException
+    {
+    	ArrayList<String> projects_name = new ArrayList<String>();
+		
+		String apiToken =  this.AsanaToken;
+    	String token = "Bearer " + apiToken;
+		HttpClient client = HttpClient.newBuilder().build();
+		HttpRequest prRequest = HttpRequest.newBuilder()
+                .uri(URI.create("https://app.asana.com/api/1.0/projects"))
+                .headers("Authorization",token)
+                .build();
+
+		HttpResponse<String> prResponse;
+		prResponse = client.send(prRequest,HttpResponse.BodyHandlers.ofString());
+		JSONObject prObj = new JSONObject(prResponse.body());
+
+		JSONArray prArr = prObj.getJSONArray("data");
+		for(int i=0;i<prArr.length();i++)
+		{
+			projects_name.add(prArr.getJSONObject(i).getString("name"));
+		}
+		
+		return projects_name;
+    
+    }
+    
+    
 	public void updateEmail(String wid) throws IOException, InterruptedException
 	{
 		String bot_token = this.AsanaToken;
