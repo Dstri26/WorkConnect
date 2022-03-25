@@ -8,6 +8,8 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,67 +135,75 @@ public class SlackService {
 		String token = "Bearer "+bot_token;
 		HashMap<String,String> projects = getProjects();
 		
-		
-		String channel_id = "C0313AG3ZPB";
-		String url_str = "";
-		
-		//Fetch task/messages assigned in the slack channel
-		//For initial condition when no task has been added
-        if(x == null) {
-        	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id +"&pretty=1";
-        }
-        else {
-        	long ts = (x.getTime()/1000)+1;
-        	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id + "&oldest="+ String.valueOf(ts)+ "&pretty=1";
-        }
-        
-		HttpClient client = HttpClient.newBuilder().build();
-		HttpRequest request = HttpRequest.newBuilder()
-		                .uri(URI.create(url_str))
-		                .header("Authorization",token)
-		                .header("Content-Type","application/x-www-form-urlencoded")
-		                .POST(HttpRequest.BodyPublishers.noBody())
-		                .build();
-		HttpResponse<String> response;
-		
-		//Received response json for the requested tasks
-		response = client.send(request,HttpResponse.BodyHandlers.ofString());		
-		//System.out.println(response.body());
-		JSONObject taskObj = new JSONObject(response.body());
-		JSONArray taskArr = taskObj.getJSONArray("messages");
 
-
-
-			for(int i =0;i<taskArr.length();i++) {
-				JSONObject tempObj = taskArr.getJSONObject(i);
-				
-				//Removes the bot messages
-				if(tempObj.getString("user").equals("U030NQSKSCB")) {
-					continue;
-				}
-				
-				//Fetching all the receiver(app mentioned) emails
-				ArrayList<String> receiverEmails = matchMention(tempObj.getString("text"));
-				
-				//Checking for app mentions messages only
-				if(tempObj.getString("type").equals("message") && receiverEmails.size()>0) {
-					Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
+	    for(String key: projects.keySet()) {
+	    	
+			String channel_id = key;
+			String url_str = "";
+			
+			//Fetch task/messages assigned in the slack channel
+			//For initial condition when no task has been added
+	        if(x == null) {
+	        	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id +"&pretty=1";
+	        }
+	        else {
+	        	long ts = (x.getTime()/1000)+1;
+	        	url_str = "https://slack.com/api/conversations.history" + "?channel=" + channel_id + "&oldest="+ String.valueOf(ts)+ "&pretty=1";
+	        }
+	        
+			HttpClient client = HttpClient.newBuilder().build();
+			HttpRequest request = HttpRequest.newBuilder()
+			                .uri(URI.create(url_str))
+			                .header("Authorization",token)
+			                .header("Content-Type","application/x-www-form-urlencoded")
+			                .POST(HttpRequest.BodyPublishers.noBody())
+			                .build();
+			HttpResponse<String> response;
+			
+			//Received response json for the requested tasks
+			response = client.send(request,HttpResponse.BodyHandlers.ofString());		
+			
+			JSONObject taskObj = new JSONObject(response.body());
+			JSONArray taskArr = taskObj.getJSONArray("messages");
+	
+	
+	
+				for(int i =0;i<taskArr.length();i++) {
+					JSONObject tempObj = taskArr.getJSONObject(i);
 					
-					//Adding multiple tasks for multiple mentions
-					for (String rem : receiverEmails) {
+					System.out.println(tempObj);
+					System.out.println(projects.get(key));
 					
-						//Creating and adding a new Task object to the output tasks array
-						Task newTask = new Task();
-						newTask.setTaskName(tempObj.getString("text"));
-				        newTask.setReceiver(rem);
-				        newTask.setPlatform("slack");
-				        newTask.setStatus(0);
-				        newTask.setIsDeleted(0);
-				        newTask.setTime(d);
-				        op.add(0,newTask);
+					System.out.println(tempObj.getString("user"));
+					//Removes the bot messages
+					if(tempObj.getString("user").equals("U030NQSKSCB")) {
+						continue;
+					}
+					
+					//Fetching all the receiver(app mentioned) emails
+					ArrayList<String> receiverEmails = matchMention(tempObj.getString("text"));
+					
+					//Checking for app mentions messages only
+					if(tempObj.getString("type").equals("message") && receiverEmails.size()>0) {
+						Date d = new Date(((long) Double.parseDouble(tempObj.getString("ts"))*1000));
+						
+						//Adding multiple tasks for multiple mentions
+						for (String rem : receiverEmails) {
+						
+							//Creating and adding a new Task object to the output tasks array
+							Task newTask = new Task();
+							newTask.setTaskName(tempObj.getString("text"));
+					        newTask.setReceiver(rem);
+					        newTask.setPlatform("slack");
+					        newTask.setStatus(0);
+					        newTask.setProjectName(projects.get(key));
+					        newTask.setIsDeleted(0);
+					        newTask.setTime(d);
+					        op.add(0,newTask);
+						}
 					}
 				}
-			}
+	    }
 		
 		//Adding tasks to database if tasks available
 		if(op.size()>0) {
