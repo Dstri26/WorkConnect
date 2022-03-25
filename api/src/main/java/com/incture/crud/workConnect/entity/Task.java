@@ -24,10 +24,12 @@ public class Task {
 	private String taskName;
 	private String platform;
 	private String receiver;
+	private String projectName;
 	private int status;
 	private int isDeleted=0;
 	private int isCompleted=0;
 	private Date time;
+
 	
 
     public int getId() {
@@ -86,4 +88,14 @@ public class Task {
     public void setTime(Date d) {
     	this.time = d;
     }
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+    
+    
 }

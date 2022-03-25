@@ -64,6 +64,7 @@ public class TaskController {
     public Task findTaskById(@PathVariable int id) {
         return service.getTaskById(id);
     }
+    
     @GetMapping("/TaskByEmail/{email}")
     public List<Task> findTaskByEmail(@PathVariable String email) {
         return service.getTaskByEmail(email);
@@ -83,5 +84,8 @@ public class TaskController {
     public String deleteTask(@PathVariable int id) {
         return service.deleteTask(id);
     }
+    
+
+    
 
 }
