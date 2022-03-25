@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import TaskPage from './TaskPage';
 import Home from './Home';
 import Login from './Login';
+import Register from './Register';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home/>} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/register" element={<Register/>} />
             <Route path="/asana" element={<TaskPage platform="asana"/>} />
             <Route path="/slack" element={<TaskPage platform="slack" />} />
           </Routes>

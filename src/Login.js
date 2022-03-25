@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,12 +15,6 @@ const Login = () => {
     const [lemail,setLEmail]= useState('');
     const [lpassword,setLPassword]= useState('');
     const [lmsg,setLMsg]= useState('');
-
-    const [rname,setRName] = useState('');
-    const [remail,setREmail]= useState('');
-    const [rpassword,setRPassword]= useState('');
-    const [rphone,setRPhone]= useState('');
-    const [rmsg,setRMsg]= useState('');
 
     const handleLogin= (e) => {
         e.preventDefault();
@@ -45,34 +40,47 @@ const Login = () => {
         })
     }
 
-    const handleRegister= (e) => {
-        e.preventDefault();
-        var name = rname;
-        var email = remail;
-        var password = rpassword;
-        var phoneNo = rphone;
-        const payload = {name, email, password, phoneNo};
-        fetch('//13.127.82.222:9191/registerUser/',{
-            method : 'POST',
-            headers : {"Content-Type":"application/json"},
-            body: JSON.stringify(payload)
-        }).then((res)=>{    
-            return res.json();
-        }).then((data)=>{
-            if (data.status === "1") {
-                sessionStorage.setItem("wcEmail", data.email);
-                navigate('/');
-            }
-            else{
-                setRMsg(data.msg);
-            }
-        })
-    }
-
 
     return ( 
         <div className="login-page">
-            <div className="row">
+            <div className="container login-container">
+                <div className="row">
+                    <div className="col-md-6 login-form-1">
+                        <h3><i className="fas fa-user"></i>&nbsp;User Login</h3>
+                        <form>
+                            <div className="form-group">
+                                <input type="text" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4" placeholder="Your Email" value="" />
+                            </div>
+                            <div className="form-group">
+                                <input type="password" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4"  placeholder="Your Password " value="" />
+                            </div>
+                            <br />
+                            <div className="form-group">
+                                <input type="submit" className="btnSubmit" value="Login" />
+                            </div>
+                            <div className="form-group">
+                                <Link to="/register" className="RegisterBtn">Not Registered?</Link>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="col-md-6 login-form-2">
+                        <h3><i className="fas fa-lock-alt"></i> &nbsp; Admin Login </h3>
+                        <form>
+                            <div className="form-group">
+                                <input type="text" placeholder="Your Email" value="" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4"  />
+                            </div>
+                            <div className="form-group">
+                                <input type="password" placeholder="Your Password" value="" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4" />
+                            </div>
+                            <br />
+                            <div className="form-group">
+                                <input type="submit" className="btnSubmit" value="Login" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {/* <div className="row">
                 <div className="col-md-6 d-flex align-items-center justify-content-center">
                     <div className="card">
                         <div className="card-body">
@@ -113,70 +121,7 @@ const Login = () => {
                     </div>
                 </div>
 
-                <div className="col-md-6 d-flex align-items-center justify-content-center">
-                    <div className="card">
-                        <div className="card-body">
-                            <form onSubmit={handleRegister}>
-                                    <p className="lead">Register Yourself</p>
-                                    <hr />
-                                    <div className="form-group">
-                                        <input 
-                                            type="text" 
-                                            className="form-control" 
-                                            name="rname" 
-                                            id="rname" 
-                                            value={rname}
-                                            onChange={(e)=>setRName(e.target.value)}
-                                            required
-                                            placeholder="Enter your full name"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <input 
-                                            type="email" 
-                                            className="form-control" 
-                                            name="remail" 
-                                            id="remail" 
-                                            value={remail}
-                                            onChange={(e)=>setREmail(e.target.value)}
-                                            required
-                                            placeholder="Enter your email"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <input 
-                                            type="password" 
-                                            className="form-control" 
-                                            name="rpassword" 
-                                            id="rpassword"
-                                            value={rpassword}
-                                            onChange={(e)=>setRPassword(e.target.value)}
-                                            required
-                                            placeholder="Enter your password"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <input 
-                                            type="text" 
-                                            className="form-control" 
-                                            name="rphone" 
-                                            id="rphone" 
-                                            value={rphone}
-                                            onChange={(e)=>setRPhone(e.target.value)}
-                                            required
-                                            placeholder="Enter your phone number"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        {rmsg && <p className="text-success">{rmsg}</p>}
-                                    </div>
-                                    <button type="submit" className="btn btn-primary">Register</button>
-                                    
-                                </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> */}
         </div>
      );
 }

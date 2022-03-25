@@ -103,11 +103,16 @@ body{
 .symbols{
   font-size: 1.5rem;
 }
+.login-page .row{
+  padding: 2rem;
+}
 .login-page .col-md-6{
-  min-height: 90vh;
+  min-height: 40vh;
+  border-radius: 10px 10px;
 }
 .login-page .card{
   width: 70%;
+  
 }
 .text-muted{
   cursor: pointer;
@@ -118,6 +123,73 @@ body{
   margin:1rem 0;
 }
 
+
+.login-container{
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.login-form-1{
+  padding: 5%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 h3{
+  text-align: center;
+  color: #333;
+}
+.login-form-2{
+  padding: 5%;
+  background: #0062cc;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-2 h3{
+  text-align: center;
+  color: #fff;
+}
+.login-container form{
+  padding: 10%;
+}
+.btnSubmit
+{
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  border: none;
+  cursor: pointer;
+}
+.login-form-1 .btnSubmit{
+  font-weight: 600;
+  color: #fff;
+  background-color: #0062cc;
+}
+.login-form-2 .btnSubmit{
+  font-weight: 600;
+  color: #0062cc;
+  background-color: #fff;
+}
+.login-form-2 .RegisterBtn{
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.login-form-1 .RegisterBtn{
+  color: #0062cc;
+  font-weight: 600;
+  text-decoration: none;
+}
+.login,
+.image {
+  min-height: 90vh;
+}
+
+.bg-image {
+  background-image: url('https://bootstrapious.com/i/snippets/sn-page-split/bg.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+
+
 html,body{
   overflow-x: hidden;
 }
+
+
