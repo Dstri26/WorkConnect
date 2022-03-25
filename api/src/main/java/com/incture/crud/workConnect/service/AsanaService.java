@@ -31,60 +31,6 @@ public class AsanaService {
     @Value("${app.asana.access}")
     private String AsanaAccess;
     
-    //Get Asana project id's
-    public ArrayList<String> getProjectId() throws IOException, InterruptedException
-    {
-    	ArrayList<String> projects_id = new ArrayList<String>();
-		
-		String apiToken =  this.AsanaToken;
-    	String token = "Bearer " + apiToken;
-		HttpClient client = HttpClient.newBuilder().build();
-		HttpRequest prRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://app.asana.com/api/1.0/projects"))
-                .headers("Authorization",token)
-                .build();
-
-		HttpResponse<String> prResponse;
-		prResponse = client.send(prRequest,HttpResponse.BodyHandlers.ofString());
-		JSONObject prObj = new JSONObject(prResponse.body());
-
-		JSONArray prArr = prObj.getJSONArray("data");
-		for(int i=0;i<prArr.length();i++)
-		{
-			projects_id.add(prArr.getJSONObject(i).getString("gid"));
-		}
-		
-		return projects_id;
-    
-    }
-     
-     //Get Asana project's Name
-    public ArrayList<String> getProjectName() throws IOException, InterruptedException
-    {
-    	ArrayList<String> projects_name = new ArrayList<String>();
-		
-		String apiToken =  this.AsanaToken;
-    	String token = "Bearer " + apiToken;
-		HttpClient client = HttpClient.newBuilder().build();
-		HttpRequest prRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://app.asana.com/api/1.0/projects"))
-                .headers("Authorization",token)
-                .build();
-
-		HttpResponse<String> prResponse;
-		prResponse = client.send(prRequest,HttpResponse.BodyHandlers.ofString());
-		JSONObject prObj = new JSONObject(prResponse.body());
-
-		JSONArray prArr = prObj.getJSONArray("data");
-		for(int i=0;i<prArr.length();i++)
-		{
-			projects_name.add(prArr.getJSONObject(i).getString("name"));
-		}
-		
-		return projects_name;
-    
-    }
-    
     
 	public void updateEmail(String wid) throws IOException, InterruptedException
 	{
@@ -151,24 +97,27 @@ public class AsanaService {
 		JSONObject prObj = new JSONObject(prResponse.body());
 		
 		JSONArray prArr = prObj.getJSONArray("data");
-		String prId = prArr.getJSONObject(0).getString("gid");
-		String prName = prArr.getJSONObject(0).getString("name");
+		//System.out.println(prArr.length());
+		for(int i=0;i<prArr.length();i++)
+		{
+			String prId = prArr.getJSONObject(i).getString("gid");
+			String prName = prArr.getJSONObject(i).getString("name");
 		
 		//Fetch tasks from project
-		HttpRequest request = HttpRequest.newBuilder()
+			HttpRequest request = HttpRequest.newBuilder()
 		                .uri(URI.create("https://app.asana.com/api/1.0/projects/"+prId+"/tasks?opt_fields=assignee,name"))
 		                .headers("Authorization",token)
 		                .build();
 		
-		HttpResponse<String> taskResponse;
-		taskResponse = client.send(request,HttpResponse.BodyHandlers.ofString());
+			HttpResponse<String> taskResponse;
+			taskResponse = client.send(request,HttpResponse.BodyHandlers.ofString());
 		
-		JSONObject taskObj = new JSONObject(taskResponse.body());
-		JSONArray taskArr = taskObj.getJSONArray("data");
-		Date d = new Date();
-		for(int i=0;i<taskArr.length();i++)
+			JSONObject taskObj = new JSONObject(taskResponse.body());
+			JSONArray taskArr = taskObj.getJSONArray("data");
+			Date d = new Date();
+		for(int j=0;j<taskArr.length();j++)
 		{
-			JSONObject tempObj = taskArr.getJSONObject(i);
+			JSONObject tempObj = taskArr.getJSONObject(j);
 			JSONObject assignee = tempObj.getJSONObject("assignee");
 			
 			Task newTask = new Task();
@@ -178,12 +127,15 @@ public class AsanaService {
 			newTask.setTaskName(tempObj.getString("name"));
 	        newTask.setReceiver(users.get(assignee.getString("gid")));
 	        newTask.setPlatform("asana");
+	        newTask.setProjectName(prName);
 	        newTask.setStatus(0);
 	        newTask.setIsDeleted(0);
 	        newTask.setTime(d);
 	        op.add(0,newTask);
 			
 		}
+		}
+		
 
 		//Adding tasks to database if tasks available
 		if(op.size()>0) {
