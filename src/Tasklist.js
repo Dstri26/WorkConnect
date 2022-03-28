@@ -16,7 +16,7 @@ const TaskList = ({tasks,handleUpdate}) => {
                             <div className="col-md-1 text-center d-flex align-items-center justify-content-center symbols">
                                 <div className="row">
                                     <div className="col-12">
-                                        <i onClick={() => handleUpdate(task.id)} className={"fas " + ( task.status === 0 ? 'fa-check text-success' : 'fa-trash text-danger')}></i>
+                                        <i onClick={() => handleUpdate(task.id)} className={"fas " + ( task.status === 0 ? 'fa-check text-success' : 'fa-trash text-danger+ ')}></i>
                                     </div>
                                 </div>
                             </div>

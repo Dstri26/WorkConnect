@@ -3,6 +3,7 @@ package com.incture.crud.workConnect.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.incture.crud.workConnect.entity.User;
 import com.incture.crud.workConnect.service.AdminService;
 
 @RestController
+@CrossOrigin(origins="*")
 public class AdminController {
 	
 	@Autowired
@@ -28,16 +30,16 @@ public class AdminController {
     
     @PostMapping("/logoutAdmin")
     public Map<String, String> logoutUser(@RequestBody Admin admin) {
-        return service.logoutUser(admin);
+        return service.logoutAdmin(admin);
     }
     
-    @PutMapping("/update")
- public Admin updateUser(@RequestBody Admin admin) {
+    @PutMapping("/updateAdmin")
+ public Admin updateAdmin(@RequestBody Admin admin) {
       return service.updateAdmin(admin);
   }
 
-  @DeleteMapping("/delete/{id}")
-  public String deleteUser(@PathVariable int id) {
+  @DeleteMapping("/deleteAdmin/{id}")
+  public String deleteAdmin(@PathVariable int id) {
 	  return service.deleteAdmin(id);
   }
   }

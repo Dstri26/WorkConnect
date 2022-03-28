@@ -1,12 +1,15 @@
 package com.incture.crud.workConnect.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.entity.User;
 import com.incture.crud.workConnect.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private UserService service;
-
+    
+    @GetMapping("/Users")
+    public List<Task> findAllTasks() {
+        return service.getUsers();
+    }
+    
     @PostMapping("/registerUser")
     public Map<String, String> addUser(@RequestBody User User) {
         return service.registerUser(User);

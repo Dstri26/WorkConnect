@@ -6,11 +6,29 @@ const Navbar = () => {
 
     // const [isLogout,setIsLogout] =  useState(true);
     const navigate = useNavigate();
-    const handleLogout= (e) => {
+    const handleUserLogout= (e) => {
         e.preventDefault()
         let email= sessionStorage.getItem("wcEmail");
         const payload = {email};
-        fetch('//13.127.82.222:9191/logoutUser/',{
+        fetch('//localhost:8778/logoutUser/',{
+            method : 'POST',
+            headers : {"Content-Type":"application/json"},
+            body: JSON.stringify(payload)
+        }).then((res)=>{    
+            return res.json();
+        }).then((data)=>{
+            if(data.status === '1'){
+                sessionStorage.clear();
+                navigate('/login');
+            }
+            
+        })
+    }
+    const handleAdminLogout= (e) => {
+        e.preventDefault()
+        let email= sessionStorage.getItem("adminEmail");
+        const payload = {email};
+        fetch('//localhost:8778/logoutAdmin/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)
@@ -37,7 +55,19 @@ const Navbar = () => {
                             {sessionStorage.getItem("wcEmail") && <Link to="/" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;{sessionStorage.getItem("wcEmail")}</Link>}
                         </li>
                         <li className="nav-item">
-                            {sessionStorage.getItem("wcEmail") && <Link to="/" onClick={handleLogout} className="nav-link"><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Signout</Link> }
+                            {sessionStorage.getItem("wcEmail") && <Link to="/" onClick={handleUserLogout} className="nav-link"><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Signout</Link> }
+                        </li>
+                        <li className="nav-item ">
+                            {sessionStorage.getItem("adminEmail") && <Link to="/tasks" className="nav-link"><i className="fa fa-list"></i>&nbsp;&nbsp;All Tasks</Link>}
+                        </li>
+                        <li className="nav-item ">
+                            {sessionStorage.getItem("adminEmail") && <Link to="/users" className="nav-link"><i className="fa fa-users"></i>&nbsp;&nbsp;All Users</Link>}
+                        </li>
+                        <li className="nav-item ">
+                            {sessionStorage.getItem("adminEmail") && <Link to="/admin" className="nav-link"><i className="fa fa-user"></i>&nbsp;&nbsp;{sessionStorage.getItem("adminEmail")}</Link>}
+                        </li>
+                        <li className="nav-item">
+                            {sessionStorage.getItem("adminEmail") && <Link to="/" onClick={handleAdminLogout} className="nav-link"><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Signout</Link> }
                         </li>
                     </ul>
                 </div>

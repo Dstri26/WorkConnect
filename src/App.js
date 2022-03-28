@@ -5,19 +5,21 @@ import TaskPage from './TaskPage';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
+import AdminUserPage from './AdminUserPage';
+import AdminTaskPage from './AdminTaskPage';
 
 
 function App() {
-  // const email = "trideep.india@gmail.com";
-  // const { data:tasks, isPending, error} = useAxios('http://localhost:9191/TaskByEmail/'+ email);
-  // console.log(tasks);
   return (
     <Router>
     <div className="App">
-      <Navbar></Navbar>
+        <Navbar></Navbar>
         <div className="content">
           <Routes>
             <Route path="/" element={<Home/>} />
+            <Route path="/admin" element={<AdminUserPage/>} />
+            <Route path="/users" element={<AdminUserPage/>} />
+            <Route path="/tasks" element={<AdminTaskPage/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/asana" element={<TaskPage platform="asana"/>} />

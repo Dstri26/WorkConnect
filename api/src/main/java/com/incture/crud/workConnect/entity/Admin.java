@@ -29,6 +29,9 @@ public class Admin {
 	private String phoneno;
 	private String loggedIn = "false";
 	
+	public Admin() {
+		
+	}
 	public Admin(String email, String password) {
 		this.email = email;
 		this.password = password;

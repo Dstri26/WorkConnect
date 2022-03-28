@@ -10,6 +10,34 @@ const Login = () => {
             navigate('/');
         }
     })
+    const [aemail,setAEmail]= useState('');
+    const [apassword,setAPassword]= useState('');
+    const [amsg,setAMsg]= useState('');
+
+    const handleAdminLogin= (e) => {
+        e.preventDefault();
+        var email = aemail;
+        var password = apassword;
+        const payload = {email, password};
+        fetch('//localhost:8778/loginAdmin/',{
+            method : 'POST',
+            headers : {"Content-Type":"application/json"},
+            body: JSON.stringify(payload)
+        }).then((res)=>{    
+            return res.json();
+        }).then((data)=>{
+            console.log(data);
+            if (data.status === "1") {
+                sessionStorage.setItem("adminEmail", data.email);
+                navigate('/admin');
+            }
+            else{
+                setAMsg(data.msg);
+            }
+            
+            
+        })
+    }
 
 
     const [lemail,setLEmail]= useState('');
@@ -21,7 +49,7 @@ const Login = () => {
         var email = lemail;
         var password = lpassword;
         const payload = {email, password};
-        fetch('//13.127.82.222:9191/loginUser/',{
+        fetch('//localhost:8778/loginUser/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)
@@ -47,16 +75,39 @@ const Login = () => {
                 <div className="row">
                     <div className="col-md-6 login-form-1">
                         <h3><i className="fas fa-user"></i>&nbsp;User Login</h3>
-                        <form>
+                        <form onSubmit={handleLogin}>
                             <div className="form-group">
-                                <input type="text" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4" placeholder="Your Email" value="" />
+                                <input 
+                                    type="email" 
+                                    name="lemail" 
+                                    id="lemail" 
+                                    value={lemail}
+                                    onChange={(e)=>setLEmail(e.target.value)}
+                                    required
+                                    
+                                    className="form-control rounded-pill border-0 shadow-sm px-4" 
+                                    placeholder="Enter your Email" 
+                                />
                             </div>
                             <div className="form-group">
-                                <input type="password" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4"  placeholder="Your Password " value="" />
+                                <input 
+                                    type="password" 
+                                    name="lpassword" 
+                                    id="lpassword"
+                                    value={lpassword}
+                                    onChange={(e)=>setLPassword(e.target.value)}
+                                    required 
+                                    
+                                    className="form-control rounded-pill border-0 shadow-sm px-4"  
+                                    placeholder="Your Password " 
+                                />
                             </div>
+                            <div className="form-group">
+                                    {lmsg && <p className="text-success">{lmsg}</p>}
+                                </div>
                             <br />
                             <div className="form-group">
-                                <input type="submit" className="btnSubmit" value="Login" />
+                                <input type="submit" className="btnSubmit" value="User Login" />
                             </div>
                             <div className="form-group">
                                 <Link to="/register" className="RegisterBtn">Not Registered?</Link>
@@ -65,63 +116,43 @@ const Login = () => {
                     </div>
                     <div className="col-md-6 login-form-2">
                         <h3><i className="fas fa-lock-alt"></i> &nbsp; Admin Login </h3>
-                        <form>
-                            <div className="form-group">
-                                <input type="text" placeholder="Your Email" value="" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4"  />
+                        <form onSubmit={handleAdminLogin}>
+                        <div className="form-group">
+                                <input 
+                                    type="email" 
+                                    name="aemail" 
+                                    id="aemail" 
+                                    value={aemail}
+                                    onChange={(e)=>setAEmail(e.target.value)}
+                                    required
+                                    className="form-control rounded-pill border-0 shadow-sm px-4" 
+                                    placeholder="Enter your Email" 
+                                />
                             </div>
                             <div className="form-group">
-                                <input type="password" placeholder="Your Password" value="" required="" autofocus="" className="form-control rounded-pill border-0 shadow-sm px-4" />
+                                <input 
+                                    type="password" 
+                                    name="apassword" 
+                                    id="apassword"
+                                    value={apassword}
+                                    onChange={(e)=>setAPassword(e.target.value)}
+                                    required 
+                                    
+                                    className="form-control rounded-pill border-0 shadow-sm px-4"  
+                                    placeholder="Your Password " 
+                                />
+                            </div>
+                            <div className="form-group">
+                                    {amsg && <p className="text-light">{amsg}</p>}
                             </div>
                             <br />
                             <div className="form-group">
-                                <input type="submit" className="btnSubmit" value="Login" />
+                                <input type="submit" className="btnSubmit" value="Admin Login" />
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            {/* <div className="row">
-                <div className="col-md-6 d-flex align-items-center justify-content-center">
-                    <div className="card">
-                        <div className="card-body">
-                            <form onSubmit={handleLogin}>
-                                <p className="lead">Login Yourself</p>
-                                <hr />
-                                <div className="form-group">
-                                    <input 
-                                        type="email" 
-                                        className="form-control" 
-                                        name="lemail" 
-                                        id="lemail" 
-                                        value={lemail}
-                                        onChange={(e)=>setLEmail(e.target.value)}
-                                        required
-                                        placeholder="Enter your email"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <input 
-                                        type="password" 
-                                        className="form-control" 
-                                        name="lpassword" 
-                                        id="lpassword"
-                                        value={lpassword}
-                                        onChange={(e)=>setLPassword(e.target.value)}
-                                        required
-                                        placeholder="Enter your password"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    {lmsg && <p className="text-success">{lmsg}</p>}
-                                </div>
-                                <button type="submit" className="btn btn-primary">Login</button>
-                                
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-            </div> */}
         </div>
      );
 }

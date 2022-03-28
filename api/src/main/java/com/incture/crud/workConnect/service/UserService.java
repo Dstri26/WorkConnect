@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.entity.User;
 import com.incture.crud.workConnect.repository.UserRepository;
 
@@ -14,6 +15,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository repository;
+    
+    //Service to retrieve all tasks from database
+    public List<User> getUsers() {
+        return repository.findAll();
+    }
     
     //Registration Service
     public Map<String, String> registerUser(User newUser) {

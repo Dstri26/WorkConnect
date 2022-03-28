@@ -24,7 +24,7 @@ const Register = () => {
         var password = rpassword;
         var phoneNo = rphone;
         const payload = {name, email, password, phoneNo};
-        fetch('//13.127.82.222:9191/registerUser/',{
+        fetch('//localhost:8778/registerUser/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)

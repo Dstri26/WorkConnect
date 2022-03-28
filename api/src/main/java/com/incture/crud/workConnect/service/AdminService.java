@@ -24,14 +24,14 @@ public class AdminService {
     	if(readmin == null) {
             res.put("email", admin.getEmail());
             res.put("status", "0");
-            res.put("msg", "User Log In Failed!");
+            res.put("msg", "Admin Log In Failed!");
             
             return res;
     	}
     	
         res.put("email", readmin.getEmail());
         res.put("status", "1");
-        res.put("msg", "User Logged In Successfully!");
+        res.put("msg", "Admin Logged In Successfully!");
         readmin.setLoggedIn("true");
         repository.save(readmin);
     	System.out.println("Login user: " + readmin);
@@ -40,7 +40,7 @@ public class AdminService {
     }
     
     //Logout Service
-    public Map<String, String> logoutUser(Admin radmin) {
+    public Map<String, String> logoutAdmin(Admin radmin) {
     	Admin admin = repository.findByEmail(radmin.getEmail());
     	HashMap<String, String> res = new HashMap<>();    	
         res.put("email", admin.getEmail());

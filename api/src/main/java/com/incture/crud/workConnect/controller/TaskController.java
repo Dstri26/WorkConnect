@@ -80,7 +80,7 @@ public class TaskController {
         return service.updateTask(task);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteTask/{id}")
     public String deleteTask(@PathVariable int id) {
         return service.deleteTask(id);
     }

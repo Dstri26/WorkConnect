@@ -10,10 +10,10 @@ import com.incture.crud.workConnect.entity.Admin;
 
 public interface AdminRepository extends JpaRepository<Admin,Integer>{
 	
-	@Query(value = "SELECT e FROM User e WHERE e.email = :email AND e.password = :password")
+	@Query(value = "SELECT e FROM Admin e WHERE e.email = :email AND e.password = :password")
     Admin findByEmailPass(@Param("email") String email, @Param("password") String password);
 	
-	@Query(value = "SELECT e FROM User e WHERE e.email = :email")
+	@Query(value = "SELECT e FROM Admin e WHERE e.email = :email")
     Admin findByEmail(@Param("email") String email);
 
 }

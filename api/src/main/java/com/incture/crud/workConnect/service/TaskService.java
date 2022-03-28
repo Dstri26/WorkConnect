@@ -49,7 +49,7 @@ public class TaskService {
     //Service to delete task from database by id
     public String deleteTask(int id) {
         repository.deleteById(id);
-        return "Task removed " + id;
+        return "1";
     }
     
     //Service to update task from database by id

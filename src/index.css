@@ -178,7 +178,7 @@ body{
 }
 .login,
 .image {
-  min-height: 90vh;
+  min-height: 100vh;
 }
 
 .bg-image {
@@ -187,6 +187,39 @@ body{
   background-position: center center;
 }
 
+.taskTable{
+  padding: 2vw 5vw;
+}
+.taskTable .card-body{
+  max-height: 65vh;
+  overflow-y: scroll;
+}
+
+.del-task{
+  cursor: pointer;
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e6bd3500;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #e6bc35;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 html,body{
   overflow-x: hidden;
