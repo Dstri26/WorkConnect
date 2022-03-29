@@ -80,7 +80,7 @@ public class UserService {
     
     public String deleteUser(int id) {
         repository.deleteById(id);
-        return "User removed " + id;
+        return "1";
     }
     
     public User updateUser(User User) {

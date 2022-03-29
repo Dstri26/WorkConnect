@@ -9,50 +9,61 @@ const AdminUserPage = () => {
         }
     })
 
-    const [users,setUsers] =  useState(null);
+    const [users,setUsers] = useState(null);
     useEffect(() => {
-        fetch('//localhost:8778/TaskByEmail/')
+        fetch('//localhost:8778/Users/')
             .then((res)=>{
                 return res.json()
             })
             .then((data)=>{
                 setUsers(data);
-                console.log(data)
             })
     },[])
 
+    const handleDelete = (id) => {
+        fetch('//localhost:8778/deleteUser/'+id,{
+            method : 'DELETE'
+        }).then((res)=>{
+            return res.json()
+        })
+        .then((data)=>{
+            const newusers = users.filter(user => user.id!==id);
+            setUsers(newusers);
+        })
+    }
+
     return ( 
         <div className="userTable">
-           <table className="table">
-            <thead className="thead-primary">
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                </tr>
-                <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                </tr>
-                <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                </tr>
-            </tbody>
-            </table>
+            <div className="card">
+                <div className="card-header">
+                    <p className="lead"><i className="fa fa-list"></i>&nbsp;&nbsp; All Users</p>
+                </div>
+                <div className="card-body">
+                <table className="table">
+                <thead className="thead-dark">
+                    <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">User Mail</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                {  users && <tbody>
+                    { users.map((user)=>(
+                            <tr key={user.id} className="table-success">
+                                <td><small>{user.id}</small></td>
+                                <td>{user.email}</td>
+                                <td>{user.name}</td>
+                                <td>{user.phoneNo}</td>
+                                <td onClick={() => handleDelete(user.id)} className='text-danger del-user'><i className="fa fa-trash"></i>&nbsp;&nbsp;Delete</td>
+                            </tr>
+                    ))
+                    }
+                </tbody> }
+            </table> 
+                </div>
+            </div>
        </div>
      );
 }
