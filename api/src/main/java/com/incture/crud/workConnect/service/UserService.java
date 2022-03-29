@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.entity.User;
 import com.incture.crud.workConnect.repository.UserRepository;
 
@@ -92,4 +91,12 @@ public class UserService {
         existingUser.setPhoneNo(User.getPhoneNo());
         return repository.save(existingUser);
     }
+    
+   /** public int getScores(User user)
+    {
+    	String email = user.getEmail();
+    	int score = repository.findTaskCompletedByEmail(email);
+    	return score;
+    }**/
+      
 }
