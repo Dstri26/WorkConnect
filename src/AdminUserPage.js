@@ -27,7 +27,7 @@ const AdminUserPage = () => {
     },[])
 
     const handleDelete = (id) => {
-        fetch('//13.127.82.222:8778/deleteUser/'+id,{
+        fetch('//13.127.82.222:8778/delete/'+id,{
             method : 'DELETE'
         }).then((res)=>{
             return res.json()

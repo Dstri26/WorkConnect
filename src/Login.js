@@ -49,7 +49,7 @@ const Login = () => {
         var email = lemail;
         var password = lpassword;
         const payload = {email, password};
-        fetch('//localhost:8778/loginUser/',{
+        fetch('//13.127.82.222:8778/loginUser/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)
