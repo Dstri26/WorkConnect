@@ -45,6 +45,12 @@ public class UserController {
     public Map<String, String> logoutUser(@RequestBody User User) {
         return service.logoutUser(User);
     }
+    
+    /**@GetMapping("/scores")
+    public int getScores(User user)
+    {
+    	return service.getScores(user);
+    }**/
 
 //
 //    @GetMapping("/UserById/{id}")
