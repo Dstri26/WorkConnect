@@ -49,7 +49,7 @@ const Register = () => {
 
         <div className="col-md-6 d-none d-md-flex bg-image"></div>
 
-        <div className="col-md-6 bg-light">
+        <div className="col-md-6">
             <div className="login d-flex align-items-center py-5">
 
                 <div className="container">

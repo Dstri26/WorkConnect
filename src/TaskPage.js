@@ -6,7 +6,7 @@ const TaskPage = ({platform}) =>{
     const navigate = useNavigate();
     useEffect(() => {
         if (sessionStorage.getItem("wcEmail") === null) {
-            navigate('/login');
+            navigate('/register');
         }
     })
     const email = sessionStorage.getItem("wcEmail");

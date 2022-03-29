@@ -42,7 +42,7 @@ public class TaskController {
     }
 
     @GetMapping("/Tasks")
-    public List<Task> findAllTasks() {
+    public List<Task> findAllTasks() {	
         return service.getTasks();
     }
     

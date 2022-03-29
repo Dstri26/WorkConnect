@@ -7,7 +7,7 @@ const Home = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (sessionStorage.getItem("wcEmail") === null) {
-            navigate('/login');
+            navigate('/register');
         }
     })
     
@@ -32,7 +32,7 @@ const Home = () => {
                         <div className="card-body text-center">
                             <p className="plat-txt">Asana</p>
                             <p className="task-txt">Tasks</p>
-                            {!asanaUpdate && <Link to="/asana"  className="btn btn-md btn-light">Explore</Link>}
+                            <Link to="/asana"  className="btn btn-md btn-light">Explore</Link>
                         </div>
                         {asanaUpdate && <div className="card-footer">
                              <small>Updating...</small>   
@@ -45,7 +45,7 @@ const Home = () => {
                         <div className="card-body text-center">
                             <p className="plat-txt">Slack</p>
                             <p className="task-txt">Tasks</p>
-                            {!slackUpdate && <Link to="/slack"  className="btn btn-md btn-light">Explore</Link>}
+                            <Link to="/slack"  className="btn btn-md btn-light">Explore</Link>
                         </div>
                         {slackUpdate && <div className="card-footer">
                              <small>Updating...</small>   

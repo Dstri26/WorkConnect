@@ -1,11 +1,11 @@
 import { useState,useEffect } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AdminUserPage = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (sessionStorage.getItem("adminEmail") === null) {
-            navigate('/login');
+            navigate('/register');
         }
     })
 
