@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
-    // const [isLogout,setIsLogout] =  useState(true);
     const navigate = useNavigate();
     const handleUserLogout= (e) => {
         e.preventDefault()
@@ -45,7 +44,7 @@ const Navbar = () => {
     return ( 
         <div className="navClass">
             <nav className="navbar navbar-expand-lg">
-                <Link to="/" className="navbar-brand">WorkConnect</Link>
+                <p className="navbar-brand">WorkConnect</p>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

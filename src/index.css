@@ -195,6 +195,14 @@ body{
   overflow-y: scroll;
 }
 
+.userTable{
+  padding: 2vw 5vw;
+}
+.userTable .card-body{
+  max-height: 65vh;
+  overflow-y: scroll;
+}
+
 .del-task{
   cursor: pointer;
 }

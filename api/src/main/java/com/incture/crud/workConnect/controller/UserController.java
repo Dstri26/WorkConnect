@@ -9,7 +9,9 @@ import com.incture.crud.workConnect.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,7 @@ public class UserController {
     private UserService service;
     
     @GetMapping("/Users")
-    public List<Task> findAllTasks() {
+    public List<User> findAllUsers() {
         return service.getUsers();
     }
     
@@ -64,9 +66,9 @@ public class UserController {
 //        return service.updateUser(User);
 //    }
 //
-//    @DeleteMapping("/delete/{id}")
-//    public String deleteUser(@PathVariable int id) {
-//        return service.deleteUser(id);
-//    }
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(@PathVariable int id) {
+        return service.deleteUser(id);
+    }
 
 }
