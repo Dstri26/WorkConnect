@@ -12,7 +12,7 @@ const TaskPage = ({platform}) =>{
     const email = sessionStorage.getItem("wcEmail");
     const [tasks,setTasks] =  useState(null);
     useEffect(() => {
-        fetch('//localhost:8778/TaskByEmail/'+ email)
+        fetch('//13.127.82.222:8778/TaskByEmail/'+ email)
             .then((res)=>{
                 return res.json()
             })
@@ -24,7 +24,7 @@ const TaskPage = ({platform}) =>{
 
 
     const handleUpdate = (id) => {
-        fetch('//localhost:8778/updateStatus/'+id)
+        fetch('//13.127.82.222:8778/updateStatus/'+id)
         .then((res)=>{
             return res.json()
         })

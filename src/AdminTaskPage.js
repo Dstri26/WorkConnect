@@ -11,7 +11,7 @@ const AdminTaskPage = () => {
 
     const [tasks,setTasks] = useState(null);
     useEffect(() => {
-        fetch('//localhost:8778/Tasks/')
+        fetch('//13.127.82.222:8778/Tasks/')
             .then((res)=>{
                 return res.json()
             })
@@ -21,7 +21,7 @@ const AdminTaskPage = () => {
     },[])
 
     const handleDelete = (id) => {
-        fetch('//localhost:8778/deleteTask/'+id,{
+        fetch('//13.127.82.222:8778/deleteTask/'+id,{
             method : 'DELETE'
         }).then((res)=>{
             return res.json()

@@ -10,7 +10,7 @@ const Navbar = () => {
         e.preventDefault()
         let email= sessionStorage.getItem("wcEmail");
         const payload = {email};
-        fetch('//localhost:8778/logoutUser/',{
+        fetch('//13.127.82.222:8778/logoutUser/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)
@@ -28,7 +28,7 @@ const Navbar = () => {
         e.preventDefault()
         let email= sessionStorage.getItem("adminEmail");
         const payload = {email};
-        fetch('//localhost:8778/logoutAdmin/',{
+        fetch('//13.127.82.222:8778/logoutAdmin/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)

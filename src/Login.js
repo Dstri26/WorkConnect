@@ -19,7 +19,7 @@ const Login = () => {
         var email = aemail;
         var password = apassword;
         const payload = {email, password};
-        fetch('//localhost:8778/loginAdmin/',{
+        fetch('//13.127.82.222:8778/loginAdmin/',{
             method : 'POST',
             headers : {"Content-Type":"application/json"},
             body: JSON.stringify(payload)

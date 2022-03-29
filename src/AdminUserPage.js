@@ -11,7 +11,7 @@ const AdminUserPage = () => {
 
     const [users,setUsers] = useState(null);
     useEffect(() => {
-        fetch('//localhost:8778/Users/')
+        fetch('//13.127.82.222:8778/Users/')
             .then((res)=>{
                 return res.json()
             })
@@ -27,7 +27,7 @@ const AdminUserPage = () => {
     },[])
 
     const handleDelete = (id) => {
-        fetch('//localhost:8778/deleteUser/'+id,{
+        fetch('//13.127.82.222:8778/deleteUser/'+id,{
             method : 'DELETE'
         }).then((res)=>{
             return res.json()
