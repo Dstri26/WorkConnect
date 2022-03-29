@@ -118,12 +118,12 @@ body{
   cursor: pointer;
 }
 .taskTxt{
-  background:#ffffff;
-  padding:0.6rem;
   margin:1rem 0;
 }
 
-
+.alert{
+  margin: 1rem;
+}
 .login-container{
   margin-top: 5%;
   margin-bottom: 5%;

@@ -1,5 +1,6 @@
 package com.incture.crud.workConnect.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,21 @@ public class UserService {
     private UserRepository repository;
     
     //Service to retrieve all tasks from database
-    public List<User> getUsers() {
-        return repository.findAll();
+    public List<HashMap<String,String>> getUsers() {
+    	List<HashMap<String, String>> res = new ArrayList<HashMap<String, String>>();
+        List<User> tempUsers = repository.findAll();
+        for (User user : tempUsers) {
+        	HashMap<String,String> tempRes = new HashMap<>();
+        	tempRes.put("id",Integer.toString(user.getId()));
+        	tempRes.put("email",user.getEmail());
+        	tempRes.put("name",user.getName());
+        	tempRes.put("phoneNo",user.getPhoneNo());
+        	tempRes.put("tasksCompleted",Integer.toString(repository.findTaskCompletedByEmail(user.getEmail())));
+        	
+        	res.add(tempRes);
+        }
+        
+        return res;
     }
     
     //Registration Service

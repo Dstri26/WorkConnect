@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.incture.crud.workConnect.entity.Admin;
-import com.incture.crud.workConnect.entity.User;
 import com.incture.crud.workConnect.service.AdminService;
 
 @RestController

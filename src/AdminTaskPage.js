@@ -51,7 +51,7 @@ const AdminTaskPage = () => {
                 </thead>
                 {  tasks && <tbody>
                     { tasks.map((task)=>(
-                            <tr key={task.id} className={( task.status === 1 ? 'table-success' : 'table-warning')}>
+                            <tr key={task.id} className={( task.status === 1 ? 'table-success' : 'table-primary')}>
                                 <td><small>{task.time.slice(0,10)} {task.time.slice(11,19)}</small></td>
                                 <td>{task.receiver}</td>
                                 <td>{task.projectName}</td>

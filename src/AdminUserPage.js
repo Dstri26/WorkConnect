@@ -16,7 +16,13 @@ const AdminUserPage = () => {
                 return res.json()
             })
             .then((data)=>{
-                setUsers(data);
+                //Sorting Tasks
+
+                var byTasks = data.slice(0);
+                byTasks.sort(function(a,b) {
+                    return b.tasksCompleted - a.tasksCompleted;
+                });
+                setUsers(byTasks);
             })
     },[])
 
@@ -36,27 +42,27 @@ const AdminUserPage = () => {
         <div className="userTable">
             <div className="card">
                 <div className="card-header">
-                    <p className="lead"><i className="fa fa-list"></i>&nbsp;&nbsp; All Users</p>
+                    <p className="lead"><i className="fa fa-list"></i>&nbsp;&nbsp;All Users</p>
                 </div>
                 <div className="card-body">
                 <table className="table">
                 <thead className="thead-dark">
                     <tr>
-                    <th scope="col">Id</th>
                     <th scope="col">User Mail</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Task Completed</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Action</th>
                     </tr>
                 </thead>
                 {  users && <tbody>
-                    { users.map((user)=>(
-                            <tr key={user.id} className="table-success">
-                                <td><small>{user.id}</small></td>
+                    { users.map((user, index)=>(
+                            <tr key={user.id} className={(index===0 ? 'table-danger' : (index===1 ? 'table-success' : (index===2 ? 'table-primary' : '')) )}>
                                 <td>{user.email}</td>
                                 <td>{user.name}</td>
+                                <td>{user.tasksCompleted}</td>
                                 <td>{user.phoneNo}</td>
-                                <td onClick={() => handleDelete(user.id)} className='text-danger del-user'><i className="fa fa-trash"></i>&nbsp;&nbsp;Delete</td>
+                                <td onClick={() => handleDelete(user.id)} className='text-danger del-task'><i className="fa fa-trash"></i>&nbsp;&nbsp;Delete</td>
                             </tr>
                     ))
                     }

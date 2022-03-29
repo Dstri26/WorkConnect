@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.incture.crud.workConnect.entity.Admin;
-import com.incture.crud.workConnect.entity.User;
 import com.incture.crud.workConnect.repository.AdminRepository;
 
 @Service

@@ -1,9 +1,9 @@
 package com.incture.crud.workConnect.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.incture.crud.workConnect.entity.Task;
 import com.incture.crud.workConnect.entity.User;
 import com.incture.crud.workConnect.service.UserService;
 
@@ -27,7 +27,7 @@ public class UserController {
     private UserService service;
     
     @GetMapping("/Users")
-    public List<User> findAllUsers() {
+    public List<HashMap<String,String>> findAllUsers() {
         return service.getUsers();
     }
     

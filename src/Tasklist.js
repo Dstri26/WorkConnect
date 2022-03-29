@@ -4,12 +4,14 @@ const TaskList = ({tasks,handleUpdate}) => {
         <div className="task-list ">
             { tasks.map((task)=>(
                 <div className="task" key={task.id}>
-                <div className={"alert text-left " + ( task.status === 0 ? 'alert-warning ' : 'alert-secondary text-muted')} role="alert">
+                <div className={"alert text-left " + ( task.status === 0 ? 'alert-primary ' : 'alert-secondary text-muted')} role="alert">
                         <div className="row">
                             <div className="d-flex col-md-11 align-items-center">
                                 <div>
-                                    <p className="time"><strong>{task.time.slice(0,10)} </strong><small>{task.time.slice(11,19)}</small> :</p>
-                                    <p className="taskTxt"><em>{task.taskName}</em></p>
+                                    <p className="lead"><span class="badge badge-pill badge-warning">{task.projectName}</span></p>
+                                    <p className="taskTxt h6"> {task.taskName}</p>
+                                    <hr />
+                                    <span class="time"><small>{task.time.slice(0,10)} {task.time.slice(11,19)}</small> </span>
                                 </div>
                                 
                             </div>
